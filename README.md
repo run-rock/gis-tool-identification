@@ -1,151 +1,96 @@
 # GIS Tool Identification
 
-This repository contains GIS tool identification, embedding retrieval evaluation and TTPE. Run scripts from the repository root. Set model, index and service paths explicitly. The synthesis scripts require an OpenAI-compatible service and local GIS tool descriptions.
-
-| Experiment | Evaluation entry point | Dataset relative to data/retrival_G8/测试数据 | Results |
-|---|---|---|---|
-| Tool-Eval | evaluation/embedding_eval/evaluate_retrieval.py | 工具检索和识别/tool_multi_answer.json | results/embedding |
-| Toolbox-Eval | evaluation/embedding_eval/evaluate_retrieval.py | 工具箱检索/toolbox_multi_answer.json | results/embedding |
-| Case-Eval | evaluation/embedding_eval/evaluate_retrieval.py | 案例检索和选择/case_from_tool_multi.json | results/embedding |
-| TTPE and LLM comparison | evaluation/agent_eval/evaluate_toolbox_tool_matcher.py | 工具检索和识别/v1-6-人工校验v2.json | results/ttpe and results/llm_comparison |
-| Information source | TTPE plus the two evaluation/agent_eval/4_evaluate_with_direct_llm scripts | 工具检索和识别/v1-6-人工校验v2.json | results/information_source |
-
-Tools Information additionally uses data/qgis_tool/all_tools_without_params.txt. The historical 8B training entry point is still being recovered. Checkpoint 3200 is referenced by the index-building examples, and the exact provenance of the published v1 index remains to be verified. No evaluation was rerun for this draft.
+This repository accompanies a study on GIS tool identification. It contains the implementation of embedding-based retrieval and TTPE tool selection, the evaluation datasets, and the result summaries for the manuscript. It also includes scripts for synthesizing and preprocessing training examples for GIS tool retrieval.
 
 ## Repository layout
 
 ```text
 .
+├── README.md
+├── environment.yml
 ├── core/
-│   ├── agent/
-│   │   ├── __init__.py
-│   │   ├── data_parser.py
-│   │   ├── toolbox_tool_matcher_3.py
-│   │   └── vector_db.py
-│   ├── common/
-│   │   ├── __init__.py
-│   │   └── embedding_model.py
-│   ├── preprocessing/
-│   │   ├── builders/
-│   │   │   ├── __init__.py
-│   │   │   ├── base.py
-│   │   │   ├── case_tool.py
-│   │   │   ├── tool_case.py
-│   │   │   ├── tool_toolbox.py
-│   │   │   ├── toolbox_case.py
-│   │   │   └── toolbox_tool.py
-│   │   ├── __init__.py
-│   │   ├── config.py
-│   │   ├── converter.py
-│   │   ├── formatters.py
-│   │   └── splitter.py
-│   ├── synthesis/
-│   │   ├── processors/
-│   │   │   ├── __init__.py
-│   │   │   ├── stage1_batch_processor.py
-│   │   │   ├── stage1_result_batch_processor.py
-│   │   │   └── stage2_batch_processor.py
-│   │   ├── services/
-│   │   │   ├── __init__.py
-│   │   │   ├── embedding_service.py
-│   │   │   ├── llm_utils.py
-│   │   │   └── vector_db.py
-│   │   ├── workflows/
-│   │   │   ├── __init__.py
-│   │   │   ├── case_generator.py
-│   │   │   ├── case_reviser.py
-│   │   │   ├── case_validator.py
-│   │   │   ├── scenario_generator.py
-│   │   │   ├── stage1_orchestrator.py
-│   │   │   ├── stage1_result_extractor.py
-│   │   │   └── stage2_orchestrator.py
-│   │   ├── __init__.py
-│   │   ├── base.py
-│   │   ├── config.py
-│   │   ├── models.py
-│   │   └── prompts.py
-│   └── __init__.py
-├── data/
-│   ├── qgis_tool/
-│   │   ├── all_tools_without_params.txt
-│   │   ├── qgis_tool_with_paramaters重写工具集描述-字符串版.json
-│   │   └── qgis_tool_with_paramaters重写工具集描述.json
-│   └── retrival_G8/
-│       └── 测试数据/
-│           ├── 工具检索和识别/
-│           │   ├── tool_multi_answer.json
-│           │   └── v1-6-人工校验v2.json
-│           ├── 工具箱检索/
-│           │   └── toolbox_multi_answer.json
-│           └── 案例检索和选择/
-│               └── case_from_tool_multi.json
+│   ├── agent/                     # Candidate retrieval and TTPE tool selection
+│   ├── common/                    # Embedding model interface
+│   ├── preprocessing/             # Training sample preparation
+│   └── synthesis/                 # GIS scenario and case synthesis
+├── scripts/
+│   ├── preprocessing/             # Dataset splitting and triplet preparation
+│   └── synthesis/                 # Entry points for case synthesis
 ├── evaluation/
-│   ├── agent_eval/
-│   │   ├── 4_evaluate_with_direct_llm_identification.py
-│   │   ├── 4_evaluate_with_direct_llm_不提供任何工具信息.py
-│   │   ├── __init__.py
-│   │   └── evaluate_toolbox_tool_matcher.py
 │   ├── embedding_eval/
-│   │   ├── __init__.py
 │   │   ├── build_all_vectordbs.py
 │   │   ├── evaluate_retrieval.py
 │   │   └── evaluator.py
-│   └── __init__.py
-├── results/
-│   ├── embedding/
-│   │   ├── Qwen3-Embedding-8b/
-│   │   │   ├── base/
-│   │   │   │   ├── 工具/
-│   │   │   │   │   └── evaluation_summary.csv
-│   │   │   │   ├── 工具箱/
-│   │   │   │   │   └── evaluation_summary.csv
-│   │   │   │   └── 案例/
-│   │   │   │       └── evaluation_summary.csv
-│   │   │   └── v1/
-│   │   │       ├── 工具/
-│   │   │       │   └── evaluation_summary.csv
-│   │   │       ├── 工具集/
-│   │   │       │   └── evaluation_summary.csv
-│   │   │       └── 案例/
-│   │   │           └── evaluation_summary.csv
-│   │   └── jina/
-│   │       ├── 工具/
-│   │       │   └── evaluation_summary.csv
-│   │       ├── 工具箱/
-│   │       │   └── evaluation_summary.csv
-│   │       └── 案例/
-│   │           └── evaluation_summary.csv
-│   ├── information_source/
-│   │   └── summary.csv
-│   ├── llm_comparison/
-│   │   └── summary.csv
-│   └── ttpe/
-│       └── summary.csv
-├── scripts/
-│   ├── preprocessing/
-│   │   ├── __init__.py
-│   │   ├── run_preprocess_build.py
-│   │   ├── run_preprocess_convert.py
-│   │   └── run_preprocess_split.py
-│   └── synthesis/
-│       ├── __init__.py
-│       ├── run_stage1.py
-│       ├── run_stage1_extract.py
-│       └── run_stage2.py
-├── README.md
-└── environment.yml
+│   └── agent_eval/
+│       ├── evaluate_toolbox_tool_matcher.py
+│       ├── 4_evaluate_with_direct_llm_identification.py
+│       └── 4_evaluate_with_direct_llm_不提供任何工具信息.py
+├── data/
+│   ├── qgis_tool/                 # Tool descriptions, mappings, and tool list
+│   └── retrival_G8/测试数据/
+│       ├── 工具检索和识别/
+│       │   ├── tool_multi_answer.json
+│       │   └── v1-6-人工校验v2.json
+│       ├── 工具箱检索/
+│       │   └── toolbox_multi_answer.json
+│       └── 案例检索和选择/
+│           └── case_from_tool_multi.json
+└── results/
+    ├── embedding/                 # Nine original CSV summaries for Table 4
+    ├── ttpe/summary.csv
+    ├── llm_comparison/summary.csv
+    └── information_source/summary.csv
 ```
 
+## Manuscript experiments
 
-## Evaluation workflow
+Dataset paths below are relative to `data/retrival_G8/测试数据/`.
 
-- Install the dependencies with `conda env create -f environment.yml` and activate `gis-tool-identification`.
-- Run `python evaluation/embedding_eval/evaluate_retrieval.py --help` for embedding retrieval. Set the task-specific test file and FAISS index prefix.
-- Run `python evaluation/agent_eval/evaluate_toolbox_tool_matcher.py --help` for TTPE. The identified Kimi runs used three candidate toolboxes and three candidate tools.
-- For the information-source controls, use the two direct-LLM evaluators under `evaluation/agent_eval/`. Both use the manually reviewed tool-identification test set. The Tools Information control also reads `data/qgis_tool/all_tools_without_params.txt`.
+| Experiment | Evaluation data | Results |
+| --- | --- | --- |
+| **Embedding retrieval (Table 4)** | Tool-Eval uses `工具检索和识别/tool_multi_answer.json` (3,642 queries). Toolbox-Eval uses `工具箱检索/toolbox_multi_answer.json` (3,642 queries). Case-Eval uses `案例检索和选择/case_from_tool_multi.json` (382 queries). | [`results/embedding/`](results/embedding/) |
+| **Embedding Only vs. Embedding + TTPE** | `工具检索和识别/v1-6-人工校验v2.json` (100 manually reviewed queries) | [`results/ttpe/summary.csv`](results/ttpe/summary.csv) |
+| **LLM accuracy and runtime comparison** | `工具检索和识别/v1-6-人工校验v2.json` (100 manually reviewed queries) | [`results/llm_comparison/summary.csv`](results/llm_comparison/summary.csv) |
+| **Information-source comparison** | The reported accuracy and error counts reconcile with the 3,642-query full tool test set, `工具检索和识别/tool_multi_answer.json`. The available Kimi timing logs use the 100-query manually reviewed set. The original full-set prediction files and the provenance of the table’s timing values remain to be confirmed. | [`results/information_source/summary.csv`](results/information_source/summary.csv) |
 
-The embedding results directory contains the nine original summary CSVs. The other three result directories contain comparison CSVs that preserve values from both the manuscript and the available logs. The manuscript's false-retrieval counts remain unverified.
+For Table 4, the source CSV fields are `recall@1`, `recall@3`, and `recall@5` for the manuscript’s P@k columns, and `ndcg@1`, `ndcg@3`, and `ndcg@5` for N@k. The three comparison CSVs distinguish manuscript values from values in the available evaluation files wherever they differ.
 
-## Model and index artifacts
+In the information-source comparison, the reported error counts of 110, 328, and 2,331 yield accuracies of 96.98%, 90.99%, and 36.00%, respectively, when divided by the full test set size using `accuracy = 1 − error_count / 3642`. This establishes the denominator implied by the table. The archived 100-query runs provide separate evaluation records.
 
-The Qwen3-Embedding-8B base model, candidate LoRA adapter from checkpoint 3200, and the FAISS indexes are managed separately. Each index needs its matching `.faiss` and `.pkl` files. Use the tool, toolbox, or case index for the corresponding retrieval task. Archive links are pending.
+## Running the evaluations
+
+Create and activate the environment from the repository root.
+
+```bash
+conda env create -f environment.yml
+conda activate gis-tool-identification
+```
+
+### Embedding retrieval
+
+Use `evaluation/embedding_eval/evaluate_retrieval.py` with the test dataset, the embedding model configuration, and the matching FAISS index prefix for the tool, toolbox, or case retrieval task. Each index consists of a `.faiss` file and its corresponding `.pkl` file. The index-building entry point is `evaluation/embedding_eval/build_all_vectordbs.py`.
+
+```bash
+python evaluation/embedding_eval/evaluate_retrieval.py --help
+python evaluation/embedding_eval/build_all_vectordbs.py --help
+```
+
+### TTPE and the LLM comparison
+
+Use `evaluation/agent_eval/evaluate_toolbox_tool_matcher.py` with the tool and toolbox indexes, the tool-to-toolbox mapping, the test file, and the LLM provider and model settings. The identified Kimi comparison run used three candidate toolboxes and three candidate tools.
+
+```bash
+python evaluation/agent_eval/evaluate_toolbox_tool_matcher.py --help
+```
+
+### Information-source controls
+
+The two `4_evaluate_with_direct_llm` scripts in `evaluation/agent_eval/` implement the direct tool-selection controls. **Tools Information** provides the LLM with [`all_tools_without_params.txt`](data/qgis_tool/all_tools_without_params.txt). **Nothing Information** provides the task description alone. Both scripts accept an evaluation dataset as input.
+
+## Training and model artifacts
+
+The synthesis entry points are in `scripts/synthesis/`, and the dataset splitting and triplet preparation entry points are in `scripts/preprocessing/`. Synthesis requires an OpenAI-compatible model service and local GIS tool descriptions.
+
+The training codebase was subsequently refactored. Its training entry point is `scripts/training/run_train.py` in the source project. That entry point and its supporting modules are outside the current repository snapshot.
+
+The training data, LoRA adapter, and prebuilt Qwen3-Embedding-8B FAISS indexes are packaged separately. The index-building examples reference the LoRA adapter from `checkpoint-3200`. The TTPE run records identify the `v1` tool and toolbox indexes, while the exact checkpoint used to build those archived indexes remains unconfirmed. Download links will be added when the separate artifact archive is published.
