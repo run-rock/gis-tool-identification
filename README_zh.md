@@ -92,8 +92,8 @@ python evaluation/agent_eval/evaluate_toolbox_tool_matcher.py --help
 
 ## 训练与模型文件
 
-训练样本合成入口位于 `scripts/synthesis/`。数据划分、三元组构造和格式转换入口位于 `scripts/preprocessing/`。运行合成流程需要本地 GIS 工具描述文件和兼容 OpenAI API 的模型服务。
+训练样本合成入口位于 `scripts/synthesis/`。数据划分、三元组构造和格式转换入口位于 `scripts/preprocessing/`。
 
 Embedding 训练入口是 `scripts/training/run_train.py`。
 
-训练数据、LoRA 权重和预构建的 Qwen3-Embedding-8B FAISS 索引已分别打包，归档下载链接待发布。建库示例引用 `checkpoint-3200` 的 LoRA 权重，TTPE 运行记录使用 `v1` 的工具和工具箱索引。归档中这批 `v1` 索引具体由哪个 checkpoint 构建，仍待确认。
+训练数据、LoRA 权重和预构建的 Qwen3-Embedding-8B FAISS 索引已分别打包，归档下载链接待发布。建库示例引用 `checkpoint-3200` 的 LoRA 权重，TTPE 运行记录使用 `v1` 的工具和工具箱索引。归档中这批 `v1` 索引由`checkpoint-3200`构建。
