@@ -5,6 +5,10 @@
 
 ## 文件结构
 
+
+
+
+
 ```text
 .
 ├── README.md
@@ -14,6 +18,14 @@
 │   ├── common/                    # Embedding 模型接口
 │   ├── preprocessing/            # 训练样本构建与格式转换
 │   └── synthesis/                 # GIS 场景与案例合成
+│   └── training/
+│       ├── __init__.py
+│       ├── config.py              # 模型、数据路径和训练配置
+│       ├── config_logger.py       # 记录训练配置
+│       ├── data_loader.py         # 加载训练和验证样本
+│       ├── distance_analyzer.py   # 分析样本的向量距离
+│       ├── losses.py              # 三元组损失和对比损失
+│       └── utils.py               # 池化、批次整理和训练回调
 ├── scripts/
 │   ├── preprocessing/            # 数据划分、三元组构造和格式转换入口
 │   └── synthesis/                 # 场景与案例合成入口
@@ -23,24 +35,27 @@
 │   │   ├── evaluate_retrieval.py   # Embedding 检索评估入口
 │   │   └── evaluator.py           # 检索指标计算
 │   └── agent_eval/
-│       ├── evaluate_toolbox_tool_matcher.py
-│       ├── 4_evaluate_with_direct_llm_identification.py
-│       └── 4_evaluate_with_direct_llm_不提供任何工具信息.py
+│       ├── evaluate_toolbox_tool_matcher.py              # TTPE 主实验与 LLM 泛化实验
+│       ├── 4_evaluate_with_direct_llm_identification.py    # 提供工具信息的对照
+│       └── 4_evaluate_with_direct_llm_不提供任何工具信息.py  # 仅提供任务描述的对照
 ├── data/
-│   ├── qgis_tool/                 # 工具描述、工具箱映射和对照实验工具清单
+│   ├── qgis_tool/
+│   │   ├── qgis_tool_with_paramaters重写工具集描述.json
+│   │   ├── qgis_tool_with_paramaters重写工具集描述-字符串版.json
+│   │   └── all_tools_without_params.txt                  # Tools Information 对照的工具清单
 │   └── retrival_G8/测试数据/
 │       ├── 工具检索和识别/
-│       │   ├── tool_multi_answer.json
-│       │   └── v1-6-人工校验v2.json
+│       │   ├── tool_multi_answer.json                   # 全量工具检索测试集（3,642 条）
+│       │   └── v1-6-人工校验v2.json                       # 人工校验工具识别测试集（100 条）
 │       ├── 工具箱检索/
-│       │   └── toolbox_multi_answer.json
+│       │   └── toolbox_multi_answer.json                # 工具箱检索测试集（3,642 条）
 │       └── 案例检索和选择/
-│           └── case_from_tool_multi.json
+│           └── case_from_tool_multi.json                # 案例检索测试集（382 条）
 └── results/
-    ├── embedding/                 # embedding 检索实验
-    ├── ttpe/summary.csv           # ttpe主实验
-    ├── llm_comparison/summary.csv  # ttpe的llm泛化实验   
-    └── information_source/summary.csv  # 不同信息源的对比实验
+    ├── embedding/                 # Embedding 检索实验的九份原始汇总 CSV
+    ├── ttpe/summary.csv           # Embedding Only 与 Embedding + TTPE 对照
+    ├── llm_comparison/summary.csv  # TTPE 的 LLM 泛化实验
+    └── information_source/summary.csv  # 三种信息来源对照实验
 ```
 
 ## 论文实验与数据
@@ -82,7 +97,7 @@ python evaluation/embedding_eval/build_all_vectordbs.py --help
 python evaluation/agent_eval/evaluate_toolbox_tool_matcher.py --help
 ```
 
-### 信息来源对照
+### 信息来源对照实验
 
 - **Embedding Model** 使用 Embedding 检索候选工具和工具箱，再通过 TTPE 选择工具。
 - **Tools Information** 将任务描述和[工具清单](data/qgis_tool/all_tools_without_params.txt)提供给 LLM，由它直接选择工具。
