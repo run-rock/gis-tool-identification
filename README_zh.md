@@ -5,10 +5,6 @@
 
 ## 文件结构
 
-
-
-
-
 ```text
 .
 ├── README.md
@@ -29,6 +25,8 @@
 ├── scripts/
 │   ├── preprocessing/            # 数据划分、三元组构造和格式转换入口
 │   └── synthesis/                 # 场景与案例合成入口
+│   └── training/
+│       └── run_train.py           # Embedding 模型训练入口
 ├── evaluation/
 │   ├── embedding_eval/
 │   │   ├── build_all_vectordbs.py  # 构建工具、工具箱和案例向量库
