@@ -1,0 +1,3868 @@
+Tool: Aspect
+Algorithm ID: gdal:aspect
+Description: Generates an aspect map from any GDAL-supported elevation raster.
+Aspect is the compass direction that a slope faces. The pixels will
+have a value from 0-360° measured in degrees from north indicating the
+azimuth.
+On the northern hemisphere, the north side of slopes is often shaded
+(small azimuth from 0°-90°), while the southern side receives more
+solar radiation (higher azimuth from 180°-270°).
+This algorithm is derived from the
+`GDAL DEM utility <https://gdal.org/programs/gdaldem.html>`_.
+**Default menu**: :menuselection:`Raster --> Analysis`
+
+Tool: Color relief
+Algorithm ID: gdal:colorrelief
+Description: Generates a color relief map from any GDAL-supported elevation raster.
+Color reliefs can particularly be used to depict elevations.
+The Algorithm outputs a 4-band raster with values computed from the
+elevation and a text-based color configuration file.
+By default, the colors between the given elevation values are blended
+smoothly and the result is a nice colorized elevation raster.
+This algorithm is derived from the
+`GDAL DEM utility <https://gdal.org/programs/gdaldem.html>`_.
+
+Tool: Fill NoData
+Algorithm ID: gdal:fillnodata
+Description: Fill raster regions with NoData values by interpolation from edges.
+The values for the NoData regions are calculated by the surrounding
+pixel values using inverse distance weighting.
+After the interpolation a smoothing of the results takes place.
+Input can be any GDAL-supported raster layer. This algorithm is
+generally suitable for interpolating missing regions of fairly
+continuously varying rasters (such as elevation models for instance).
+It is also suitable for filling small holes and cracks in more
+irregularly varying images (like airphotos).
+It is generally not so great for interpolating a raster from sparse
+point data.
+This algorithm is derived from the
+`GDAL fillnodata utility <https://gdal.org/programs/gdal_fillnodata.html>`_.
+**Default menu**: :menuselection:`Raster --> Analysis`
+
+Tool: Grid (Data metrics)
+Algorithm ID: gdal:griddatametrics
+Description: Computes some data metrics using the specified window and output grid
+geometry.
+This algorithm is derived from the
+`GDAL grid utility <https://gdal.org/programs/gdal_grid.html>`_.
+.. seealso:: `GDAL grid tutorial <https://gdal.org/tutorials/gdal_grid_tut.html>`_
+
+Tool: Grid (IDW with nearest neighbor searching)
+Algorithm ID: gdal:gridinversedistancenearestneighbor
+Description: Computes the Inverse Distance to a Power gridding combined to the
+nearest neighbor method.
+Ideal when a maximum number of data points to use is required.
+This algorithm is derived from the
+`GDAL grid utility <https://gdal.org/programs/gdal_grid.html>`_.
+.. seealso:: `GDAL grid tutorial <https://gdal.org/tutorials/gdal_grid_tut.html>`_
+
+Tool: Grid (Inverse distance to a power)
+Algorithm ID: gdal:gridinversedistance
+Description: The Inverse Distance to a Power gridding method is a weighted average
+interpolator.
+You should supply the input arrays with the scattered data values
+including coordinates of every data point and output grid geometry.
+The function will compute interpolated value for the given position in output grid.
+This algorithm is derived from the
+`GDAL grid utility <https://gdal.org/programs/gdal_grid.html>`_.
+.. seealso:: `GDAL grid tutorial <https://gdal.org/tutorials/gdal_grid_tut.html>`_
+
+Tool: Grid (Linear)
+Algorithm ID: gdal:gridlinear
+Description: The Linear method perform linear interpolation by computing a Delaunay
+triangulation of the point cloud, finding in which triangle of the
+triangulation the point is, and by doing linear interpolation from its
+barycentric coordinates within the triangle.
+If the point is not in any triangle, depending on the radius, the
+algorithm will use the value of the nearest point or the NoData value.
+This algorithm is derived from the
+`GDAL grid utility <https://gdal.org/programs/gdal_grid.html>`_.
+
+Tool: Grid (Moving average)
+Algorithm ID: gdal:gridaverage
+Description: The Moving Average is a simple data averaging algorithm.
+It uses a moving window of elliptic form to search values and averages
+all data points within the window.
+Search ellipse can be rotated by specified angle, the center of
+ellipse located at the grid node.
+Also the minimum number of data points to average can be set, if there
+are not enough points in window, the grid node considered empty and
+will be filled with specified NoData value.
+This algorithm is derived from the
+`GDAL grid utility <https://gdal.org/programs/gdal_grid.html>`_.
+.. seealso:: `GDAL grid tutorial <https://gdal.org/tutorials/gdal_grid_tut.html>`_
+
+Tool: Grid (Nearest neighbor)
+Algorithm ID: gdal:gridnearestneighbor
+Description: The Nearest Neighbor method doesn't perform any interpolation or
+smoothing, it just takes the value of nearest point found in grid node
+search ellipse and returns it as a result.
+If there are no points found, the specified NoData value will be
+returned.
+This algorithm is derived from the
+`GDAL grid utility <https://gdal.org/programs/gdal_grid.html>`_.
+.. seealso:: `GDAL grid tutorial <https://gdal.org/tutorials/gdal_grid_tut.html>`_
+
+Tool: Hillshade
+Algorithm ID: gdal:hillshade
+Description: Outputs a raster with a nice shaded relief effect.
+It’s very useful for visualizing the terrain.
+You can optionally specify the azimuth and altitude of the light
+source, a vertical exaggeration factor and a scaling factor to account
+for differences between vertical and horizontal units.
+This algorithm is derived from the
+`GDAL DEM utility <https://gdal.org/programs/gdaldem.html>`__ .
+**Default menu**: :menuselection:`Raster --> Analysis`
+
+Tool: Near black
+Algorithm ID: gdal:nearblack
+Description: Converts nearly black/white borders to black.
+This algorithm will scan an image and try to set all pixels that are
+nearly or exactly black, white or one or more custom colors around the
+collar to black or white.
+This is often used to "fix up" lossy compressed airphotos so that
+color pixels can be treated as transparent when mosaicking.
+This algorithm is derived from the
+`GDAL nearblack utility <https://gdal.org/programs/nearblack.html>`_.
+**Default menu**: :menuselection:`Raster --> Analysis`
+
+Tool: Proximity (raster distance)
+Algorithm ID: gdal:proximity
+Description: Generates a raster proximity map indicating the distance from the
+center of each pixel to the center of the nearest pixel identified as
+a target pixel.
+Target pixels are those in the source raster for which the raster
+pixel value is in the set of target pixel values.
+This algorithm is derived from the
+`GDAL proximity utility <https://gdal.org/programs/gdal_proximity.html>`_.
+**Default menu**: :menuselection:`Raster --> Analysis`
+
+Tool: Roughness
+Algorithm ID: gdal:roughness
+Description: Outputs a single-band raster with values computed from the elevation.
+Roughness is the degree of irregularity of the surface.
+It's calculated by the largest inter-cell difference of a central
+pixel and its surrounding cell.
+The determination of the roughness plays a role in the analysis of
+terrain elevation data, it's useful for calculations of the river
+morphology, in climatology and physical geography in general.
+This algorithm is derived from the
+`GDAL DEM utility <https://gdal.org/programs/gdaldem.html>`_.
+**Default menu**: :menuselection:`Raster --> Analysis`
+
+Tool: Sieve
+Algorithm ID: gdal:sieve
+Description: Removes raster polygons smaller than a provided threshold size (in
+pixels) and replaces them with the pixel value of the largest
+neighbour polygon.
+It is useful if you have a large amount of small areas on your raster
+map.
+This algorithm is derived from the
+`GDAL sieve utility <https://gdal.org/programs/gdal_sieve.html>`_.
+**Default menu**: :menuselection:`Raster --> Analysis`
+
+Tool: Slope
+Algorithm ID: gdal:slope
+Description: Generates a slope map from any GDAL-supported elevation raster.
+Slope is the angle of inclination to the horizontal. 
+You have the option of specifying the type of slope value you want:
+degrees or percent slope.
+This algorithm is derived from the
+`GDAL DEM utility <https://gdal.org/programs/gdaldem.html>`_.
+**Default menu**: :menuselection:`Raster --> Analysis`
+
+Tool: Terrain Ruggedness Index (TRI)
+Algorithm ID: gdal:triterrainruggednessindex
+Description: Outputs a single-band raster with values computed from the
+elevation.
+TRI stands for Terrain Ruggedness Index, which is defined
+as the mean difference between a central pixel and its
+surrounding cells.
+This algorithm is derived from the
+`GDAL DEM utility <https://gdal.org/programs/gdaldem.html>`_.
+**Default menu**: :menuselection:`Raster --> Analysis`
+
+Tool: Topographic Position Index (TPI)
+Algorithm ID: gdal:tpitopographicpositionindex
+Description: Outputs a single-band raster with values computed from the elevation.
+TPI stands for Topographic Position Index, which is defined as the
+difference between a central pixel and the mean of its surrounding
+cells.
+This algorithm is derived from the
+`GDAL DEM utility <https://gdal.org/programs/gdaldem.html>`_.
+**Default menu**: :menuselection:`Raster --> Analysis`
+
+Tool: gdal2xyz
+Algorithm ID: gdal:gdal2xyz
+Description: Converts raster data to XYZ ASCII file format.
+
+Tool: PCT to RGB
+Algorithm ID: gdal:pcttorgb
+Description: Converts an 8 bit paletted image to a 24 bit RGB.
+It will convert a pseudocolor band from the input file to
+an RGB file of the desired format.
+This algorithm is derived from the
+`GDAL pct2rgb utility <https://gdal.org/programs/pct2rgb.html>`_.
+**Default menu**: :menuselection:`Raster --> Conversion`
+
+Tool: Polygonize (raster to vector)
+Algorithm ID: gdal:polygonize
+Description: Creates vector polygons for all connected regions of pixels in the
+raster sharing a common pixel value. Each polygon is created with an
+attribute indicating the pixel value of that polygon.
+This algorithm is derived from the
+`GDAL polygonize utility <https://gdal.org/programs/gdal_polygonize.html>`_.
+**Default menu**: :menuselection:`Raster --> Conversion`
+
+Tool: Rearrange bands
+Algorithm ID: gdal:rearrange_bands
+Description: Creates a new raster using selected band(s) from a given raster layer.
+The algorithm also makes it possible to reorder the bands for the
+newly-created raster.
+This algorithm is derived from the
+`GDAL translate utility <https://gdal.org/programs/gdal_translate.html>`_.
+
+Tool: RGB to PCT
+Algorithm ID: gdal:rgbtopct
+Description: Converts a 24 bit RGB image into a 8 bit paletted.
+Computes an optimal pseudo-color table for the given RGB-image using a
+median cut algorithm on a downsampled RGB histogram.
+Then it converts the image into a pseudo-colored image using the color
+table. This conversion utilizes Floyd-Steinberg dithering (error
+diffusion) to maximize output image visual quality.
+If you want to classify a raster map and want to reduce the number of
+classes it can be helpful to downsample your image with this algorithm
+before.
+This algorithm is derived from the
+`GDAL rgb2pct utility <https://gdal.org/programs/rgb2pct.html>`_.
+**Default menu**: :menuselection:`Raster --> Conversion`
+
+Tool: Translate (convert format)
+Algorithm ID: gdal:translate
+Description: Converts raster data between different formats.
+This algorithm is derived from the
+`GDAL translate utility <https://gdal.org/programs/gdal_translate.html>`_.
+**Default menu**: :menuselection:`Raster --> Conversion`
+
+Tool: Clip raster by extent
+Algorithm ID: gdal:cliprasterbyextent
+Description: Clips any GDAL-supported raster file to a given extent.
+This algorithm is derived from the
+`GDAL translate utility <https://gdal.org/programs/gdal_translate.html>`_.
+**Default menu**: :menuselection:`Raster --> Extraction`
+
+Tool: Clip raster by mask layer
+Algorithm ID: gdal:cliprasterbymasklayer
+Description: Clips any GDAL-supported raster by a vector mask layer.
+This algorithm is derived from the
+`GDAL warp utility <https://gdal.org/programs/gdalwarp.html>`_.
+**Default menu**: :menuselection:`Raster --> Extraction`
+
+Tool: Contour
+Algorithm ID: gdal:contour
+Description: Extracts contour lines from any GDAL-supported elevation raster.
+This algorithm is derived from the
+`GDAL contour utility <https://gdal.org/programs/gdal_contour.html>`_.
+**Default menu**: :menuselection:`Raster --> Extraction`
+
+Tool: Contour Polygons
+Algorithm ID: gdal:contour_polygon
+Description: Extracts contour polygons from any GDAL-supported elevation raster.
+This algorithm is derived from the
+`GDAL contour utility <https://gdal.org/programs/gdal_contour.html>`_.
+
+Tool: Build overviews (pyramids)
+Algorithm ID: gdal:overviews
+Description: To speed up rendering time of raster layers overviews (pyramids) can
+be created. Overviews are lower resolution copies of the data which
+QGIS uses depending of the level of zoom.
+This algorithm is derived from the
+`GDAL addo utility <https://gdal.org/programs/gdaladdo.html>`_.
+**Default menu**: :menuselection:`Raster --> Miscellaneous`
+
+Tool: Build virtual raster
+Algorithm ID: gdal:buildvirtualraster
+Description: Builds a VRT (Virtual Dataset) that is a mosaic of the list of input
+GDAL-supported rasters.
+With a mosaic you can merge several raster files.
+This algorithm is derived from the
+`GDAL buildvrt utility <https://gdal.org/programs/gdalbuildvrt.html>`_.
+**Default menu**: :menuselection:`Raster --> Miscellaneous`
+
+Tool: gdal2tiles
+Algorithm ID: gdal:gdal2tiles
+Description: Generates a directory with small tiles and metadata, following the
+`OSGeo Tile Map Service Specification <https://wiki.osgeo.org/wiki/Tile_Map_Service_Specification>`_.
+See also the
+`OpenGIS Web Map Tile Service Implementation Standard
+<https://www.ogc.org/standards/wmts>`_.
+Simple web pages with viewers based on Google Maps, OpenLayers and
+Leaflet are generated as well.
+To explore your maps on-line in the web browser, you only need to
+upload the generated directory onto a web server.
+This algorithm also creates the necessary metadata for Google Earth
+(KML SuperOverlay), in case the supplied map uses ``EPSG:4326``
+projection.
+ESRI world files and embedded georeferencing is used during tile
+generation, but you can publish a picture without proper
+georeferencing too.
+This algorithm is derived from the
+`GDAL gdal2tiles utility <https://gdal.org/programs/gdal2tiles.html>`_.
+
+Tool: Merge
+Algorithm ID: gdal:merge
+Description: Merges raster files in a simple way. Here you can use a pseudocolor
+table from an input raster and define the output raster type. All
+the images must be in the same coordinate system.
+This algorithm is derived from the
+`GDAL merge utility <https://gdal.org/programs/gdal_merge.html>`_.
+**Default menu**: :menuselection:`Raster --> Miscellaneous`
+
+Tool: Pansharpening
+Algorithm ID: gdal:pansharp
+Description: Performs a pan-sharpening operation.
+It can create a "classic" output dataset (such as GeoTIFF),
+or a VRT dataset describing the pan-sharpening operation.
+See `GDAL Pansharpen <https://gdal.org/programs/gdal_pansharpen.html>`_.
+
+Tool: Raster calculator
+Algorithm ID: gdal:rastercalculator
+Description: Command line raster calculator with numpy syntax.
+Use any basic arithmetic supported by numpy arrays,
+such as +, -, \*, and / along with logical operators,
+such as >.
+Note that all input rasters must have the same
+dimensions, but no projection checking is performed.
+See the
+`GDAL Raster Calculator utility docs <https://gdal.org/programs/gdal_calc.html>`_.
+.. seealso:: :ref:`qgisrastercalc`, :ref:`qgisvirtualrastercalc`
+
+Tool: Raster information
+Algorithm ID: gdal:gdalinfo
+Description: The gdalinfo program lists various information about a GDAL supported
+raster dataset.
+This algorithm is derived from the
+`GDAL info utility <https://gdal.org/programs/gdalinfo.html>`_.
+**Default menu**: :menuselection:`Raster --> Miscellaneous`
+
+Tool: Retile
+Algorithm ID: gdal:retile
+Description: Retiles a set of input tiles.
+All the input tiles must be georeferenced in the same
+coordinate system and have a matching number of bands.
+Optionally pyramid levels are generated.
+This algorithm is derived from the
+`GDAL Retile utility <https://gdal.org/programs/gdal_retile.html>`_.
+
+Tool: Tile index
+Algorithm ID: gdal:tileindex
+Description: Builds a vector layer with a record for each input raster file, an
+attribute containing the filename, and a polygon geometry outlining
+the raster.
+This output is suitable for use with MapServer as a raster tileindex.
+This algorithm is derived from the
+`GDAL Tile Index utility <https://gdal.org/programs/gdaltindex.html>`_.
+**Default menu**: :menuselection:`Raster --> Miscellaneous`
+
+Tool: Viewshed
+Algorithm ID: gdal:viewshed
+Description: Calculates a viewshed raster from an input raster DEM using method defined in
+`Wang2000 <https://gdal.org/programs/gdal_viewshed.html#wang2000>`_ for a user
+defined point.
+
+Tool: Assign projection
+Algorithm ID: gdal:assignprojection
+Description: Applies a coordinate system to a raster dataset.
+This algorithm is derived from the
+`GDAL edit utility <https://gdal.org/programs/gdal_edit.html>`_.
+**Default menu**: :menuselection:`Raster --> Projections`
+
+Tool: Extract projection
+Algorithm ID: gdal:extractprojection
+Description: Extracts the projection of a raster file and writes it into a *world*
+file with extension :file:`.wld`.
+This algorithm is derived from the
+`GDAL srsinfo utility <https://gdal.org/programs/gdalsrsinfo.html>`_.
+**Default menu**: :menuselection:`Raster --> Projections`
+
+Tool: Warp (reproject)
+Algorithm ID: gdal:warpreproject
+Description: Reprojects a raster layer into another Coordinate Reference System
+(CRS).
+The output file resolution and the resampling method can be chosen.
+This algorithm is derived from the
+`GDAL warp utility <https://gdal.org/programs/gdalwarp.html>`_.
+**Default menu**: :menuselection:`Raster --> Projections`
+
+Tool: Convert format
+Algorithm ID: gdal:convertformat
+Description: Converts any OGR-supported vector layer into another OGR-supported
+format.
+This algorithm is derived from the
+`ogr2ogr utility <https://gdal.org/programs/ogr2ogr.html>`_.
+
+Tool: Rasterize (overwrite with attribute)
+Algorithm ID: gdal:rasterize_over
+Description: Overwrites a raster layer with values from a vector layer.
+New values are assigned based on the attribute value of
+the overlapping vector feature.
+This algorithm is derived from the
+`GDAL rasterize utility <https://gdal.org/programs/gdal_rasterize.html>`_.
+
+Tool: Rasterize (overwrite with fixed value)
+Algorithm ID: gdal:rasterize_over_fixed_value
+Description: Overwrites parts of a raster layer with a fixed value.
+The pixels to overwrite are chosen based on the supplied (overlapping)
+vector layer.
+This algorithm is derived from the
+`GDAL rasterize utility <https://gdal.org/programs/gdal_rasterize.html>`_.
+
+Tool: Rasterize (vector to raster)
+Algorithm ID: gdal:rasterize
+Description: Converts vector geometries (points, lines and polygons) into a raster
+image.
+This algorithm is derived from the
+`GDAL rasterize utility <https://gdal.org/programs/gdal_rasterize.html>`_.
+**Default menu**: :menuselection:`Raster --> Conversion`
+
+Tool: Buffer vectors
+Algorithm ID: gdal:buffervectors
+Description: Create buffers around the features of a vector layer.
+
+Tool: Clip vector by extent
+Algorithm ID: gdal:clipvectorbyextent
+Description: Clips any OGR-supported vector file to a given extent.
+This algorithm is derived from the
+`GDAL ogr2ogr utility <https://gdal.org/programs/ogr2ogr.html>`_.
+
+Tool: Clip vector by mask layer
+Algorithm ID: gdal:clipvectorbypolygon
+Description: Clips any OGR-supported vector layer by a mask polygon layer.
+This algorithm is derived from the `GDAL ogr2ogr utility
+<https://gdal.org/programs/ogr2ogr.html>`_.
+
+Tool: Dissolve
+Algorithm ID: gdal:dissolve
+Description: Dissolve (combine) geometries that have the same value for
+a given attribute / field.
+The output geometries are multipart.
+
+Tool: Offset curve
+Algorithm ID: gdal:offsetcurve
+Description: Offsets lines by a specified distance.
+Positive distances will offset lines to the left, and negative
+distances will offset them to the right.
+
+Tool: One side buffer
+Algorithm ID: gdal:onesidebuffer
+Description: Creates a buffer on one side (right or left) of the lines in a line
+vector layer.
+
+Tool: Points along lines
+Algorithm ID: gdal:pointsalonglines
+Description: Generates a point on each line of a line vector layer at a distance
+from start.
+The distance is provided as a fraction of the line length.
+
+Tool: Build virtual vector
+Algorithm ID: gdal:buildvirtualvector
+Description: Creates a virtual vector layer that contains a set of vector layers.
+The output virtual vector layer will not be opened in the current
+project.
+This algorithm is especially useful in case another algorithm needs
+multiple layers but accept only one ``vrt`` in which the layers are
+specified.
+
+Tool: Execute SQL
+Algorithm ID: gdal:executesql
+Description: Runs a simple or complex query with SQL syntax on the source layer.
+The result of the query will be added as a new layer.
+This algorithm is derived from the
+`GDAL ogr2ogr utility <https://gdal.org/programs/ogr2ogr.html>`_.
+
+Tool: Export to PostgreSQL (available connections)
+Algorithm ID: gdal:importvectorintopostgisdatabaseavailableconnections
+Description: Imports vector layers inside a PostgreSQL database on the basis of
+an available connection.
+The connection has to
+:ref:`be defined properly <vector_create_stored_connection>`
+beforehand.
+Be aware that the checkboxes 'Save Username' and 'Save Password' are
+activated.
+Then you can use the algorithm.
+This algorithm is derived from the
+`GDAL ogr2ogr utility <https://gdal.org/programs/ogr2ogr.html>`_.
+
+Tool: Export to PostgreSQL (new connection)
+Algorithm ID: gdal:importvectorintopostgisdatabasenewconnection
+Description: Imports vector layers inside a PostgreSQL database. A new connection
+to the PostGIS database must be created.
+This algorithm is derived from the
+`GDAL ogr2ogr utility <https://gdal.org/programs/ogr2ogr.html>`_.
+
+Tool: Vector Information
+Algorithm ID: gdal:ogrinfo
+Description: Creates an information file that lists information about an
+OGR-supported data source.
+The output will be shown in a 'Result' window and can be written
+into a HTML-file.
+The information includes the geometry type, feature count, the spatial
+extent, the projection information and many more.
+This algorithm is derived from the
+`GDAL ogrinfo utility <https://gdal.org/programs/ogrinfo.html>`_.
+
+Tool: Convert B3DM to GLTF
+Algorithm ID: native:b3dmtogltf
+Description: Converts files from the legacy :file:`.B3DM` format to :file:`.GLTF` or :file:`.GLB`.
+
+Tool: Convert GLTF to vector features
+Algorithm ID: native:gltftovector
+Description: Converts :file:`.GLTF` or :file:`.GLB` file contents to standard vector layer formats.
+
+Tool: Align points to features
+Algorithm ID: native:angletonearest
+Description: Calculates the rotation required to align point features with their nearest
+feature from another reference layer. A new field is added to the output layer
+which is filled with the angle (in degrees, clockwise) to the nearest reference
+feature.
+Optionally, the output layer's symbology can be set to automatically use the
+calculated rotation field to rotate marker symbols.
+If desired, a maximum distance to use when aligning points can be set,
+to avoid aligning isolated points to distant features.
+.. hint:: This algorithm is designed for use cases like aligning building
+ point symbols to follow the nearest road direction.
+of point features
+
+Tool: Combine style databases
+Algorithm ID: native:combinestyles
+Description: Combines multiple QGIS style databases into a single style database.
+If items of the same type with the same name exist in different source
+databases these will be renamed to have unique names in the output combined database.
+.. seealso:: :ref:`qgisstylefromproject`
+
+Tool: Create categorized renderer from styles
+Algorithm ID: native:categorizeusingstyle
+Description: Sets a vector layer's renderer to a categorized renderer using matching symbols
+from a style database. If no style file is specified, symbols from the user's
+current :ref:`symbol library <vector_symbol_library>` are used instead.
+A specified expression or field is used to create categories for the renderer.
+Each category is individually matched to the symbols which exist within
+the specified QGIS XML style database. Whenever a matching symbol name is found,
+the category's symbol will be set to this matched symbol.
+If desired, outputs can also be tables containing lists of the categories which
+could not be matched to symbols, and symbols which were not matched to categories.
+
+Tool: Create style database from project
+Algorithm ID: native:stylefromproject
+Description: Extracts all style objects (symbols, color ramps, text formats and
+label settings) from a QGIS project.
+The extracted symbols are saved to a QGIS style database (:file:`XML` format),
+which can be managed and imported via the :ref:`Style Manager <vector_style_manager>`
+dialog.
+.. seealso:: :ref:`qgiscombinestyles`
+
+Tool: Export atlas layout as image
+Algorithm ID: native:atlaslayouttoimage
+Description: Exports the atlas of a print layout as image files (e.g. PNG or JPEG images).
+If a coverage layer is set, the selected layout's atlas settings exposed
+in this algorithm will be overwritten. In this case, an empty filter or
+sort by expression will turn those settings off.
+
+Tool: Export atlas layout as PDF (multiple files)
+Algorithm ID: native:atlaslayouttomultiplepdf
+Description: Exports the atlas of a print layout to multiple PDF files.
+If a coverage layer is set, the selected layout's atlas settings exposed
+in this algorithm will be overwritten. In this case, an empty filter or
+sort by expression will turn those settings off.
+
+Tool: Export atlas layout as PDF (single file)
+Algorithm ID: native:atlaslayouttopdf
+Description: Exports the atlas of a print layout as a single PDF file.
+If a coverage layer is set, the selected layout's atlas settings exposed
+in this algorithm will be overwritten. In this case, an empty filter or
+sort by expression will turn those settings off.
+
+Tool: Export print layout as image
+Algorithm ID: native:printlayouttoimage
+Description: Exports a print layout as an image file (e.g. PNG or JPEG images)
+
+Tool: Export print layout as PDF
+Algorithm ID: native:printlayouttopdf
+Description: Exports a print layout as a PDF file.
+
+Tool: Extract labels
+Algorithm ID: native:extractlabels
+Description: Extracts label information from a rendered map at a given extent and scale.
+If a map theme is provided, the rendered map will match the visibility and
+symbology of that theme. If left blank, all visible layers from the project
+will be used.
+Extracted label information include: position (served as point geometries),
+the associated layer name and feature ID, label text, rotation (in degree,
+clockwise), multiline alignment, and font details.
+
+Tool: Print layout map extent to layer
+Algorithm ID: native:printlayoutmapextenttolayer
+Description: Creates a polygon layer containing the extent of a print layout map item
+(or items), with attributes specifying the map size (in layout units,
+i.e. the :ref:`reference map <reference_map>` units), scale and rotation.
+If the map item parameter is specified, then only the matching map extent will
+be exported. If it is not specified, all map extents from the layout will be exported.
+Optionally, a specific output CRS can be specified. If it is not specified,
+the original map item CRS will be used.
+
+Tool: Set layer style
+Algorithm ID: native:setlayerstyle
+Description: Applies a provided style to a layer. The style must be defined in a
+:file:`QML` file.
+No new output are created: the style is immediately assigned to the layer.
+
+Tool: Topological coloring
+Algorithm ID: qgis:topologicalcoloring
+Description: Assigns a color index to polygon features in such a way that no adjacent polygons
+share the same color index, whilst minimizing the number of colors required.
+The algorithm allows choice of method to use when assigning colors.
+A minimum number of colors can be specified if desired. The color index is saved
+to a new attribute named **color_id**.
+The following example shows the algorithm with four different colors chosen; as you
+can see each color class has the same amount of features.
+  Topological colors example
+
+Tool: Transfer annotations from main layer
+Algorithm ID: native:transferannotationsfrommain
+Description: Transfers all :ref:`annotations <annotation_layer>` from the main annotation layer in a project to a new annotation layer.
+Items placement can then be adjusted within the layer stack.
+
+Tool: Export to PostgreSQL
+Algorithm ID: qgis:importintopostgis
+Description: Exports a vector layer to a PostgreSQL database, creating a new
+relation.
+If a relation with the same name exists, it can be removed before the
+new relation is created.
+Prior to this a connection between QGIS and the PostgreSQL database
+has to be created (see eg :ref:`vector_create_stored_connection`).
+
+Tool: Export to SpatiaLite
+Algorithm ID: qgis:importintospatialite
+Description: Exports a vector layer to a SpatiaLite database.
+Prior to this a connection between QGIS and the SpatiaLite database
+has to be created (see eg :ref:`label_spatialite`).
+
+Tool: Package layers
+Algorithm ID: native:package
+Description: Adds layers to a GeoPackage.
+If the GeoPackage exists and ``Overwrite existing GeoPackage``
+is checked, it will be overwritten (removed and recreated).
+If the GeoPackage exists and ``Overwrite existing GeoPackage``
+is not checked, the layer will be appended.
+
+Tool: PostgreSQL execute and load SQL
+Algorithm ID: qgis:postgisexecuteandloadsql
+Description: Allows a SQL database query to be performed on a PostgreSQL database connected to QGIS and loads the result. The algorithm won’t create a new layer: it is designed to run queries on the layer itself.
+
+Tool: PostgreSQL execute SQL
+Algorithm ID: native:postgisexecutesql
+Description: Allows a SQL database query to be performed on a PostgreSQL database
+connected to QGIS.
+The algorithm **won't** create a new layer: it is designed to run
+queries on the layer itself.
+.. include:: ./database.rst
+   :start-after: .. **postgisexecutesqlexample**
+   :end-before: .. **end_postgisexecutesqlexample**
+   :ref:`qgisexecutesql`, :ref:`qgisspatialiteexecutesql`
+
+Tool: SpatiaLite execute SQL
+Algorithm ID: native:spatialiteexecutesql
+Description: Allows a SQL database query to be performed on a SpatiaLite database.
+The algorithm **won't** create a new layer: it is designed to run
+queries on the layer itself.
+ For some SQL query examples see :ref:`PostGIS SQL Query Examples
+ <qgis_postgis_execute_sql_example>`.
+
+Tool: SpatiaLite execute SQL (registered DB)
+Algorithm ID: native:spatialiteexecutesqlregistered
+Description: Allows a SQL database query to be performed on a SpatiaLite database
+connected to QGIS.
+The algorithm **won't** create a new layer: it is designed to run
+queries on the layer itself.
+ For some SQL query examples see :ref:`PostGIS SQL Query Examples
+ <qgis_postgis_execute_sql_example>`.
+
+Tool: Download file
+Algorithm ID: qgis:filedownloader
+Description: Downloads a file specified using a URL (using for instance ``http:``
+or ``file:``).
+In other words you can copy/paste a URL and download the file.
+
+Tool: Convert GPS data
+Algorithm ID: native:convertgpsdata
+Description: Uses the `GPSBabel tool <https://www.gpsbabel.org/index.html>`_ to convert
+a GPS data file from a range of formats to the GPX standard format.
+
+Tool: Convert GPX feature type
+Algorithm ID: native:convertgpxfeaturetype
+Description: Uses the `GPSBabel tool <https://www.gpsbabel.org/index.html>`_ to convert
+GPX features from one type to another (e.g. converting all waypoint features to a route).
+
+Tool: Download GPS data from device
+Algorithm ID: native:downloadgpsdata
+Description: Uses the `GPSBabel tool <https://www.gpsbabel.org/index.html>`_ to download
+data from a GPS device into the GPX standard format.
+
+Tool: Upload GPS data to device
+Algorithm ID: native:uploadgpsdata
+Description: Uses the `GPSBabel tool <https://www.gpsbabel.org/index.html>`_ to upload
+data to a GPS device from the GPX standard format.
+
+Tool: Heatmap (kernel density estimation)
+Algorithm ID: qgis:heatmapkerneldensityestimation
+Description: Creates a density (heatmap) raster of an input point vector layer
+using kernel density estimation.
+The density is calculated based on the number of points in a location,
+with larger numbers of clustered points resulting in larger values.
+Heatmaps allow easy identification of *hotspots* and clustering of
+points.
+
+Tool: IDW Interpolation
+Algorithm ID: qgis:idwinterpolation
+Description: Generates an Inverse Distance Weighted (IDW) interpolation of a point
+vector layer.
+Sample points are weighted during interpolation such that the
+influence of one point relative to another declines with distance from
+the unknown point you want to create.
+The IDW interpolation method also has some disadvantages: the quality
+of the interpolation result can decrease, if the distribution of
+sample data points is uneven.
+Furthermore, maximum and minimum values in the interpolated surface
+can only occur at sample data points.
+
+Tool: Line Density
+Algorithm ID: native:linedensity
+Description: Calculates for each raster cell, the density measure of linear
+features within a circular neighbourhood. This measure is obtained by
+summing all the line segments intersecting the circular neighbourhood
+and dividing this sum by the area of such neighbourhood. 
+A weighting factor can be applied to the line segments. 
+  Line density example. Input layer source: Roads Overijssel - The
+  Netherlands (OSM).
+
+Tool: TIN Interpolation
+Algorithm ID: qgis:tininterpolation
+Description: Generates a Triangulated Irregular Network (TIN) interpolation of a
+point vector layer.
+With the TIN method you can create a surface formed by triangles of
+nearest neighbor points.
+To do this, circumcircles around selected sample points are created
+and their intersections are connected to a network of non overlapping
+and as compact as possible triangles.
+The resulting surfaces are not smooth.
+The algorithm creates both the raster layer of the interpolated values
+and the vector line layer with the triangulation boundaries.
+
+Tool: Export layer(s) information
+Algorithm ID: native:exportlayersinformation
+Description: Creates a polygon layer with features corresponding to the extent of selected layer(s).
+Additional layer details (CRS, provider name, file path, layer name, subset filter,
+abstract and attribution) are attached as attributes to each feature.
+
+Tool: Export to spreadsheet
+Algorithm ID: native:exporttospreadsheet
+Description: Exports the attributes of a selection of vector layers into a spreadsheet document
+or optionally appends them to an existing spreadsheet as additional sheets.
+
+Tool: Extract layer extent
+Algorithm ID: qgis:polygonfromlayerextent
+Description: Generates a vector layer with the minimum bounding box (rectangle with
+N-S orientation) that covers all the input features.
+The output layer contains a single bounding box for the whole input
+layer.
+   In red the bounding box of the source layer
+**Default menu**: :menuselection:`Vector --> Research Tools`
+
+Tool: Export contours
+Algorithm ID: native:meshcontours
+Description: Creates contours as a vector layer from a mesh scalar dataset.
+
+Tool: Export cross section dataset values on lines from mesh
+Algorithm ID: native:meshexportcrosssection
+Description: Extracts a mesh dataset's values from lines contained in a vector layer.
+Each line is discretized with a resolution distance parameter for extraction
+of values on its vertices.
+
+Tool: Export mesh edges
+Algorithm ID: native:exportmeshedges
+Description: Exports a mesh layer's edges to a line vector layer,
+with the dataset values on edges as attribute values.
+
+Tool: Export mesh faces
+Algorithm ID: native:exportmeshfaces
+Description: Exports a mesh layer's faces to a polygon vector layer,
+with the dataset values on faces as attribute values.
+
+Tool: Export mesh on grid
+Algorithm ID: native:exportmeshongrid
+Description: Exports a mesh layer's dataset values to a gridded point vector layer,
+with the dataset values on this point as attribute values.
+For data on volume (3D stacked dataset values), the exported dataset
+values are averaged on faces using the method defined in :ref:`the mesh layer
+properties <mesh_stacked_averaging>` (default is Multi level averaging method).
+1D meshes are not supported.
+
+Tool: Export mesh vertices
+Algorithm ID: native:exportmeshvertices
+Description: Exports a mesh layer's vertices to a point vector layer,
+with the dataset values on vertices as attribute values.
+
+Tool: Export time series values from points of a mesh dataset
+Algorithm ID: native:meshexporttimeseries
+Description: Extracts a mesh dataset's time series values from points contained in a vector layer.
+If the time step is kept to its default value (0 hours), the time step used
+is the one of the two first datasets of the first selected dataset group.
+
+Tool: Rasterize mesh dataset
+Algorithm ID: native:meshrasterize
+Description: Creates a raster layer from a mesh dataset.
+For data on volume (3D stacked dataset values), the exported dataset
+values are averaged on faces using the method defined in :ref:`the mesh layer
+properties <mesh_stacked_averaging>` (default is Multi level averaging method).
+1D meshes are not supported.
+
+Tool: TIN mesh creation
+Algorithm ID: native:tinmeshcreation
+Description: Creates a TIN mesh layer from vector layers.
+The TIN mesh is created using a Delaunay triangulation.
+
+Tool: Calculate expression
+Algorithm ID: native:calculateexpression
+Description: It calculates the result of a QGIS expression and eliminates 
+the need to use the same expression multiple times throughout 
+a model when the same result is required more than once. 
+Additionally, it enables use cases that would otherwise not be
+possible. For instance, you can generate a timestamp value once
+and use it multiple times within the model, if the timestamp 
+were recalculated every time, the values would vary during the
+model's runtime.
+
+Tool: Conditional branch
+Algorithm ID: native:condition
+Description: Adds a conditional branch into a model,
+allowing parts of the model to be executed based on
+the result of an expression evaluation. Mostly by using
+tool dependencies to control the flow of a model.
+
+Tool: Create directory
+Algorithm ID: native:createdirectory
+Description: Creates a new directory on a file system.
+Directories will be created recursively, creating all required parent
+directories in order to construct the full specified directory path.
+No errors will be raised if the directory already exists.
+
+Tool: Feature filter
+Algorithm ID: native:filter
+Description: Filters features from the input layer and redirects
+them to one or several outputs.
+If you do not know about any attribute names that are common to all
+possible input layers, filtering is only possible on the feature
+geometry and general record mechanisms, such as ``$id`` and ``uuid``.
+
+Tool: Filter layers by type
+Algorithm ID: native:filterlayersbytype
+Description: Filters layers by their type. Incoming layers will be directed
+to different outputs based on whether they are a vector or raster layer.
+
+Tool: Load layer into project
+Algorithm ID: native:loadlayer
+Description: Loads a layer to the current project.
+
+Tool: Raise exception
+Algorithm ID: native:raiseexception
+Description: Raises an exception and cancels a model's execution.
+The exception message can be customized, and optionally an expression based condition
+can be specified. If an expression condition is used, then the exception will only
+be raised if the expression result is true. A false result indicates that no exception
+will be raised, and the model execution can continue uninterrupted.
+
+Tool: Raise message
+Algorithm ID: native:raisemessage
+Description: Raises an information message in the log.
+The message can be customized, and optionally an expression based condition
+can be specified. If an expression condition is used, then the message will only
+be logged if the expression result is true. A false result indicates that no message
+will be logged.
+
+Tool: Raise warning
+Algorithm ID: native:raisewarning
+Description: Raises a warning message in the log.
+The warning message can be customized, and optionally an expression based condition
+can be specified. If an expression condition is used, then the warning will only
+be logged if the expression result is true. A false result indicates that no warning
+will be logged.
+
+Tool: Rename layer
+Algorithm ID: native:renamelayer
+Description: Renames a layer.
+
+Tool: Save log to file
+Algorithm ID: native:savelog
+Description: Saves the model's execution log to a file.
+Optionally, the log can be saved in a HTML formatted version.
+
+Tool: Set project variable
+Algorithm ID: native:setprojectvariable
+Description: Sets an expression variable for the current project.
+
+Tool: String concatenation
+Algorithm ID: native:stringconcatenation
+Description: Concatenates two strings into a single one in the Processing Modeler.
+
+Tool: Variable distance buffer
+Algorithm ID: qgis:variabledistancebuffer
+Description: .. warning:: This algorithm is deprecated and can be removed
+  anytime. Prefer using :ref:`qgisbuffer` algorithm instead.
+Computes a buffer area for all the features in an input layer.
+The size of the buffer for a given feature is defined by an
+attribute, so it allows different features to have different buffer
+sizes.
+.. seealso:: :ref:`qgisbuffer`
+
+Tool: Service area (from layer)
+Algorithm ID: qgis:serviceareafromlayer
+Description: Returns all the edges or parts of edges of a network that can be
+reached within a distance or a time, starting from a point layer.
+This allows evaluation of accessibility within a network, e.g. what
+are the places I can navigate to on a road network without spending
+cost greater than a given value (the cost can be distance or time).
+
+Tool: Service area (from point)
+Algorithm ID: native:serviceareafrompoint
+Description: Returns all the edges or parts of edges of a network that can be
+reached within a given distance or time, starting from a point
+feature.
+This allows the evaluation of accessibility within a network, e.g.
+what are the places I can navigate to on a road network without
+spending a cost greater than a given value (the cost can be distance
+or time).
+
+Tool: Shortest path (layer to point)
+Algorithm ID: native:shortestpathlayertopoint
+Description: Computes the optimal (shortest or fastest) routes from multiple start
+points defined by a vector layer and a given end point.
+
+Tool: Shortest path (point to layer)
+Algorithm ID: native:shortestpathpointtolayer
+Description: Computes the optimal (shortest or fastest) routes between a given
+start point and multiple end points defined by a point vector layer.
+
+Tool: Shortest path (point to point)
+Algorithm ID: native:shortestpathpointtopoint
+Description: Computes the optimal (shortest or fastest) route between a given start
+point and a given end point.
+
+Tool: Bar plot
+Algorithm ID: qgis:barplot
+Description: Creates a bar plot from a category and a layer field.
+
+Tool: Box plot
+Algorithm ID: qgis:boxplot
+Description: Creates a box plot from a category field and a numerical layer field.
+
+Tool: Mean and standard deviation plot
+Algorithm ID: qgis:meanandstandarddeviationplot
+Description: Creates a box plot with mean and standard deviation values.
+
+Tool: Polar plot
+Algorithm ID: qgis:polarplot
+Description: Generates a polar plot based on the value of an input vector layer.
+Two fields must be entered as parameters: one that defines the category each feature
+(to group features) and another one with the variable to plot (this has to be
+a numeric one).
+
+Tool: Raster layer histogram
+Algorithm ID: qgis:rasterlayerhistogram
+Description: Generates a histogram with the values of a raster layer.
+
+Tool: Vector layer histogram
+Algorithm ID: qgis:vectorlayerhistogram
+Description: Generates a histogram with the values of the attribute of a vector layer.
+The attribute to use for computing the histogram must be numeric.
+
+Tool: Vector layer scatterplot
+Algorithm ID: qgis:vectorlayerscatterplot
+Description: Creates a simple ``X`` - ``Y`` scatter plot for a vector layer.
+
+Tool: Vector layer scatterplot 3D
+Algorithm ID: qgis:scatter3dplot
+Description: Creates a 3D scatter plot for a vector layer.
+
+Tool: Convert format
+Algorithm ID: pdal:convertformat
+Description: Converts a point cloud to a different file format, e.g. creates a compressed :file:`.LAZ`.
+
+Tool: Export to raster
+Algorithm ID: pdal:exportraster
+Description: Exports point cloud data to a 2D raster grid having cell size of given resolution,
+writing values from the specified attribute.
+   Raster output using Intensity attribute of points
+
+Tool: Export raster (using triangulation)
+Algorithm ID: pdal:exportrastertin
+Description: Exports point cloud data to a 2D raster grid using a triangulation of points
+and then interpolating cell values from triangles.
+.. note:: Using this algorithm can be slower if you are dealing with a large dataset.
+   If your point cloud is dense, you can export your ground points as a raster using the :ref:`pdalexportraster` algorithm.
+   Terrain raster output generated by point cloud triangulation
+
+Tool: Export to vector
+Algorithm ID: pdal:exportvector
+Description: Exports point cloud data to a vector layer with 3D points (a GeoPackage),
+optionally with extra attributes.
+   Exporting point cloud (ground points) to a vector layer styled based on the elevation
+
+Tool: Assign projection
+Algorithm ID: pdal:assignprojection
+Description: Assigns a Coordinate Reference System to a point cloud layer, if it is missing or wrong.
+A new layer is created.
+.. seealso:: :ref:`pdalreproject`
+
+Tool: Build virtual point cloud (VPC)
+Algorithm ID: pdal:virtualpointcloud
+Description: Creates a :ref:`virtual point cloud (VPC) <virtual_point_cloud>` from input point cloud data.
+If you leave the optional parameters unchecked, the VPC file will be built very quickly
+as the algorithm will only read metadata of input files.
+With any of the optional parameters set, the algorithm will read all points which can take some time.
+   Generating Virtual Point Cloud with overview from a set of point cloud tiles
+.. seealso:: :ref:`pdalmerge`
+
+Tool: Clip
+Algorithm ID: pdal:clip
+Description: Clips a point cloud layer by a polygon layer
+so that the resulting point cloud contains only points within the polygons.
+   Clipping an input point cloud layer with a polygon coverage
+
+Tool: Create COPC
+Algorithm ID: pdal:createcopc
+Description: Creates the index for all the input point cloud files in a batch mode.
+
+Tool: Information
+Algorithm ID: pdal:info
+Description: Outputs basic metadata from an input point cloud file.
+Example of output information::
+    LAS           1.4
+    point format  6
+    count         56736130
+    scale         0.001 0.001 0.001
+    offset        431749.999 5440919.999 968.898
+    extent        431250 5440420 424.266
+                  432249.999 5441419.999 1513.531
+    crs           ETRS89 / UTM zone 34N (N-E) (EPSG:3046)  (vertical CRS missing!)
+    units         horizontal=metre  vertical=unknown
+    Attributes:
+    - X floating 8
+    - Y floating 8
+    - Z floating 8
+    - Intensity unsigned 2
+    - ReturnNumber unsigned 1
+    - NumberOfReturns unsigned 1
+    - ScanDirectionFlag unsigned 1
+    - EdgeOfFlightLine unsigned 1
+    - Classification unsigned 1
+    - ScanAngleRank floating 4
+    - UserData unsigned 1
+    - PointSourceId unsigned 2
+    - GpsTime floating 8
+    - ScanChannel unsigned 1
+    - ClassFlags unsigned 1
+
+Tool: Merge
+Algorithm ID: pdal:merge
+Description: Merges multiple point cloud files into a single one.
+.. seealso:: :ref:`pdalvirtualpointcloud`
+
+Tool: Reproject
+Algorithm ID: pdal:reproject
+Description: Reprojects a point cloud to a different Coordinate Reference System (CRS).
+.. seealso:: :ref:`pdalassignprojection`
+
+Tool: Thin (by sampling radius)
+Algorithm ID: pdal:thinbyradius
+Description: Creates a thinned version of the point cloud by performing sampling by distance point
+(reduces the number of points within a certain radius).
+.. only:: html
+       Thining point cloud (by sampling radius)
+.. seealso:: :ref:`pdalthinbydecimate`
+
+Tool: Thin (by skipping points)
+Algorithm ID: pdal:thinbydecimate
+Description: Creates a thinned version of the point cloud by keeping only every N-th point
+(reduces the number of points by skipping nearby points).
+.. seealso:: :ref:`pdalthinbyradius`
+
+Tool: Tile
+Algorithm ID: pdal:tile
+Description: Creates tiles from input point cloud files,
+recommended for best performance (in display or analysis) with such datasets in QGIS.
+.. seealso:: :ref:`pdalvirtualpointcloud`, :ref:`pdalcreatecopc`
+
+Tool: Boundary
+Algorithm ID: pdal:boundary
+Description: Exports a polygon file containing point cloud layer boundary.
+It may contain holes and it may be a multi-part polygon.
+   Extracting high vegetation and building polygons from an input point cloud layer
+
+Tool: Density
+Algorithm ID: pdal:density
+Description: Exports a raster file based on the number of points within each raster cell -
+useful for quality checking of point cloud datasets.
+   Point density (number of points per 2x2 m) as a raster
+
+Tool: Filter
+Algorithm ID: pdal:filter
+Description: Extracts point from the input point cloud which match PDAL expression and/or are inside of a cropping rectangle.
+   Filtering of high vegetation class from an input point cloud layer
+
+Tool: Cell stack percent rank from value
+Algorithm ID: native:cellstackpercentrankfromvalue
+Description: Calculates the cell-wise percentrank value of a stack of rasters based on
+a single input value and writes them to an output raster.
+At each cell location, the specified value is ranked among the respective values
+in the stack of all overlaid and sorted cell values from the input rasters.
+For values outside of the stack value distribution, the algorithm returns NoData
+because the value cannot be ranked among the cell values.
+There are two methods for percentile calculation:
+* Inclusive linear interpolation (PERCENTRANK.INC)
+* Exclusive linear interpolation (PERCENTRANK.EXC)
+The linear interpolation methods return the unique percent rank for different values.
+Both interpolation methods follow their counterpart methods implemented
+by `LibreOffice <https://help.libreoffice.org/latest/en-US/text/scalc/01/04060184.html?DbPAR=CALC#bm_id3148807>`_
+or Microsoft Excel.
+The output raster's extent and resolution is defined by a reference raster.
+Input raster layers that do not match the cell size of the reference
+raster layer will be resampled using nearest neighbor resampling.
+NoData values in any of the input layers will result in a NoData cell output
+if the "Ignore NoData values" parameter is not set.
+The output raster data type will always be ``Float32``.
+  Percent ranking Value = 1. ``NoData`` cells (grey) are ignored.
+.. seealso:: :ref:`qgiscellstackpercentile`, :ref:`qgiscellstackpercentrankfromrasterlayer`
+
+Tool: Cell stack percentile
+Algorithm ID: native:cellstackpercentile
+Description: Calculates the cell-wise percentile value of a stack of rasters
+and writes the results to an output raster. The percentile to return
+is determined by the percentile input value (ranges between 0 and 1).
+At each cell location, the specified percentile is obtained using the respective
+value from the stack of all overlaid and sorted cell values of the input rasters.
+There are three methods for percentile calculation:
+* Nearest rank: returns the value that is nearest to the specified percentile
+* Inclusive linear interpolation (PERCENTRANK.INC)
+* Exclusive linear interpolation (PERCENTRANK.EXC)
+The linear interpolation methods return the unique values for different percentiles.
+Both interpolation methods follow their counterpart methods implemented
+by `LibreOffice <https://help.libreoffice.org/latest/en-US/text/scalc/01/04060184.html?DbPAR=CALC#bm_id3148807>`_
+or Microsoft Excel.
+The output raster's extent and resolution is defined by a reference raster.
+Input raster layers that do not match the cell size of the reference
+raster layer will be resampled using nearest neighbor resampling.
+NoData values in any of the input layers will result in a NoData cell output
+if the "Ignore NoData values" parameter is not set.
+The output raster data type will always be ``Float32``.
+  Percentile = 0.25. ``NoData`` cells (grey) are ignored.
+.. seealso:: :ref:`qgiscellstackpercentile`, :ref:`qgiscellstackpercentrankfromrasterlayer`
+
+Tool: Cell stack percentrank from raster layer
+Algorithm ID: native:cellstackpercentrankfromrasterlayer
+Description: Calculates the cell-wise percentrank value of a stack of rasters based
+on an input value raster and writes them to an output raster.
+At each cell location, the current value of the value raster is ranked among
+the respective values in the stack of all overlaid and sorted cell values of
+the input rasters. For values outside of the the stack value distribution,
+the algorithm returns NoData because the value cannot be ranked among the cell values.
+There are two methods for percentile calculation:
+* Inclusive linear interpolation (PERCENTRANK.INC)
+* Exclusive linear interpolation (PERCENTRANK.EXC)
+The linear interpolation methods return the unique values for different percentiles.
+Both interpolation methods follow their counterpart methods implemented
+by `LibreOffice <https://help.libreoffice.org/latest/en-US/text/scalc/01/04060184.html?DbPAR=CALC#bm_id3148807>`_
+or Microsoft Excel.
+The output raster's extent and resolution is defined by a reference raster.
+Input raster layers that do not match the cell size of the reference
+raster layer will be resampled using nearest neighbor resampling.
+NoData values in any of the input layers will result in a NoData cell output
+if the "Ignore NoData values" parameter is not set.
+The output raster data type will always be ``Float32``.
+  Ranking the value raster layer cells. ``NoData`` cells (grey) are ignored.
+.. seealso:: :ref:`qgiscellstackpercentile`, :ref:`qgiscellstackpercentrankfromvalue`
+
+Tool: Cell statistics
+Algorithm ID: native:cellstatistics
+Description: Computes per-cell statistics based on input raster layers
+and for each cell writes the resulting statistics to an output raster. At each
+cell location, the output value is defined as a function of all overlaid
+cell values of the input rasters.
+By default, a NoData cell in ANY of the input layers will result in a
+NoData cell in the output raster.
+If the :guilabel:`Ignore NoData values` option is checked,
+then NoData inputs will be ignored in the statistic calculation. This
+may result in NoData output for locations where all cells are NoData.
+The :guilabel:`Reference layer` parameter specifies an existing raster layer to
+use as a reference when creating the output raster.
+The output raster will have the same extent, CRS, and pixel dimensions
+as this layer.
+**Calculation details:**
+Input raster layers that do not match the cell size of the reference
+raster layer will be resampled using ``nearest neighbor resampling``.
+The output raster data type will be set to the most complex
+data type present in the input datasets except when using the
+functions ``Mean``, ``Standard deviation`` and ``Variance`` (data type is always
+``Float32`` or ``Float64`` depending on input float type) or ``Count``
+and ``Variety`` (data type is always ``Int32``).
+- ``Count``: The count statistic will always result in the number of cells
+  without NoData values at the current cell location.
+- ``Median``: If the number of input layers is even, the median will be
+  calculated as the arithmetic mean of the two middle values of the ordered cell input values.
+- ``Minority/Majority``: If no unique minority or majority could be found,
+  the result is NoData, except all input cell values are equal.
+  Example with all the statistic functions. ``NoData`` cells (grey) are taken into account.
+
+Tool: Equal to frequency
+Algorithm ID: native:equaltofrequency
+Description: Evaluates on a cell-by-cell basis the frequency (number of times) the values
+of an input stack of rasters are equal to the value of a value layer.
+The output raster extent and resolution are defined by the input raster layer
+and is always of ``Int32`` type.
+If multiband rasters are used in the data raster stack, the algorithm will always
+perform the analysis on the first band of the rasters - use GDAL to use other bands
+in the analysis.
+The output NoData value can be set manually.
+  For each cell in the output raster, the value represents the number of times
+  that the corresponding cells in the list of rasters are the same as the value raster.
+  ``NoData`` cells (grey) are taken into account.
+.. **frequencyparams**
+.. FYI, the next params description is shared with Greater/Less than frequency algorithms
+
+Tool: Fuzzify raster (gaussian membership)
+Algorithm ID: native:fuzzifyrastergaussianmembership
+Description: Transforms an input raster to a fuzzified raster by assigning a
+membership value to each pixel, using a Gaussian membership function.
+Membership values range from 0 to 1.
+In the fuzzified raster, a value of 0 implies no membership of the
+defined fuzzy set, whereas a value of 1 means full membership.
+The gaussian membership function is defined as |gaussian_formula|,
+where *f1* is the spread and *f2* the midpoint.
+  Fuzzify raster example. Input raster source: Land Tirol -
+  data.tirol.gv.at.
+  :ref:`qgisfuzzifyrasterlinearmembership`,
+  :ref:`qgisfuzzifyrasternearmembership`,
+  :ref:`qgisfuzzifyrasterpowermembership`,
+  :ref:`qgisfuzzifyrastersmallmembership`
+
+Tool: Fuzzify raster (large membership)
+Algorithm ID: native:fuzzifyrasterlargemembership
+Description: Transforms an input raster to a fuzzified raster by assigning a
+membership value to each pixel, using a Large membership function.
+Membership values range from 0 to 1.
+In the fuzzified raster, a value of 0 implies no membership of the
+defined fuzzy set, whereas a value of 1 means full membership.
+The large membership function is defined as |fuzzy_large_formula|,
+where *f1* is the spread and *f2* the midpoint.
+  :ref:`qgisfuzzifyrasterlinearmembership`,
+  :ref:`qgisfuzzifyrasternearmembership`,
+  :ref:`qgisfuzzifyrasterpowermembership`,
+  :ref:`qgisfuzzifyrastersmallmembership`
+
+Tool: Fuzzify raster (linear membership)
+Algorithm ID: native:fuzzifyrasterlinearmembership
+Description: Transforms an input raster to a fuzzified raster by assigning a
+membership value to each pixel, using a Linear membership function.
+Membership values range from 0 to 1. In the fuzzified raster, a value
+of 0 implies no membership of the defined fuzzy set, whereas a value
+of 1 means full membership.
+The linear function is defined as |fuzzy_linear_formula|, where *a*
+is the low bound and *b* the high bound. This equation assigns
+membership values using a linear transformation for pixel values
+between the low and high bounds.
+Pixels values smaller than the low bound are given 0 membership
+whereas pixel values greater than the high bound are given 1
+membership.
+  :ref:`qgisfuzzifyrasterlargemembership`,
+  :ref:`qgisfuzzifyrasternearmembership`,
+  :ref:`qgisfuzzifyrasterpowermembership`,
+  :ref:`qgisfuzzifyrastersmallmembership`
+
+Tool: Fuzzify raster (near membership)
+Algorithm ID: native:fuzzifyrasternearmembership
+Description: Transforms an input raster to a fuzzified raster by assigning a
+membership value to each pixel, using a Near membership function.
+Membership values range from 0 to 1.
+In the fuzzified raster, a value of 0 implies no membership of the
+defined fuzzy set, whereas a value of 1 means full membership.
+The near membership function is defined as |near_formula|, where
+*f1* is the spread and *f2* the midpoint.
+  :ref:`qgisfuzzifyrasterlargemembership`,
+  :ref:`qgisfuzzifyrasterlinearmembership`,
+  :ref:`qgisfuzzifyrasterpowermembership`,
+  :ref:`qgisfuzzifyrastersmallmembership`
+
+Tool: Fuzzify raster (power membership)
+Algorithm ID: native:fuzzifyrasterpowermembership
+Description: Transforms an input raster to a fuzzified raster by assigning a
+membership value to each pixel, using a Power membership function.
+Membership values range from 0 to 1.
+In the fuzzified raster, a value of 0 implies no membership of the
+defined fuzzy set, whereas a value of 1 means full membership.
+The power function is defined as |power_formula|, where *a* is the
+low bound, *b* is the high bound, and *f1* the exponent.
+This equation assigns membership values using the power transformation
+for pixel values between the low and high bounds.
+Pixels values smaller than the low bound are given 0 membership
+whereas pixel values greater than the high bound are given 1
+membership.
+  :ref:`qgisfuzzifyrasterlinearmembership`, :ref:`qgisfuzzifyrasternearmembership`,
+  :ref:`qgisfuzzifyrastersmallmembership`
+
+Tool: Fuzzify raster (small membership)
+Algorithm ID: native:fuzzifyrastersmallmembership
+Description: Transforms an input raster to a fuzzified raster by assigning a
+membership value to each pixel, using a Small membership function.
+Membership values range from 0 to 1.
+In the fuzzified raster, a value of 0 implies no membership of the
+defined fuzzy set, whereas a value of 1 means full membership.
+The small membership function is defined as |small_formula|, where
+*f1* is the spread and *f2* the midpoint.
+  :ref:`qgisfuzzifyrasterlargemembership`
+  :ref:`qgisfuzzifyrasterlinearmembership`,
+  :ref:`qgisfuzzifyrasternearmembership`,
+  :ref:`qgisfuzzifyrasterpowermembership`
+
+Tool: Greater than frequency
+Algorithm ID: native:greaterthanfrequency
+Description: Evaluates on a cell-by-cell basis the frequency (number of times) the values
+of an input stack of rasters are equal to the value of a value raster.
+The output raster extent and resolution is defined by the input raster layer
+and is always of ``Int32`` type.
+If multiband rasters are used in the data raster stack, the algorithm will always
+perform the analysis on the first band of the rasters - use GDAL to use other bands
+in the analysis.
+The output NoData value can be set manually.
+  For each cell in the output raster, the value represents the number of times
+  that the corresponding cells in the list of rasters are greater than the value raster.
+  ``NoData`` cells (grey) are taken into account.
+.. The params description comes from the "Equal to frequency" algorithm
+.. include:: ./rasteranalysis.rst
+  :start-after: .. **frequencyparams**
+  :end-before: .. **endfrequencyparams**
+Python code
+...........
+**Algorithm ID**: ``native:greaterthanfrequency``
+.. include:: ../algs_include.rst
+  :start-after: **algorithm_code_section**
+  :end-before: **end_algorithm_code_section**
+
+Tool: Highest position in raster stack
+Algorithm ID: native:highestpositioninrasterstack
+Description: Evaluates on a cell-by-cell basis the position of the raster with the highest value
+in a stack of rasters. Position counts start with 1 and range to the total number
+of input rasters. The order of the input rasters is relevant for the algorithm.
+If multiple rasters feature the highest value, the first raster will be used for
+the position value.
+If multiband rasters are used in the data raster stack, the algorithm will
+always perform the analysis on the first band of the rasters - use GDAL to use
+other bands in the analysis.
+Any NoData cells in the raster layer stack will result in a NoData cell
+in the output raster unless the "ignore NoData" parameter is checked.
+The output NoData value can be set manually. The output rasters extent and
+resolution is defined by a reference raster layer and is always of ``Int32`` type.
+.. **positionparams**
+
+Tool: Less than frequency
+Algorithm ID: native:lessthanfrequency
+Description: Evaluates on a cell-by-cell basis the frequency (number of times) the values
+of an input stack of rasters are less than the value of a value raster.
+The output raster extent and resolution is defined by the input raster layer
+and is always of ``Int32`` type.
+If multiband rasters are used in the data raster stack, the algorithm will always
+perform the analysis on the first band of the rasters - use GDAL to use other bands
+in the analysis.
+The output NoData value can be set manually.
+  For each cell in the output raster, the value represents the number of times
+  that the corresponding cells in the list of rasters are less than the value raster.
+  ``NoData`` cells (grey) are taken into account.
+.. The params description comes from the "Equal to frequency" algorithm
+.. include:: ./rasteranalysis.rst
+  :start-after: .. **frequencyparams**
+  :end-before: .. **endfrequencyparams**
+Python code
+...........
+**Algorithm ID**: ``native:lessthanfrequency``
+.. include:: ../algs_include.rst
+  :start-after: **algorithm_code_section**
+  :end-before: **end_algorithm_code_section**
+
+Tool: Lowest position in raster stack
+Algorithm ID: native:lowestpositioninrasterstack
+Description: Evaluates on a cell-by-cell basis the position of the raster with the lowest value
+in a stack of rasters. Position counts start with 1 and range to the total number
+of input rasters. The order of the input rasters is relevant for the algorithm.
+If multiple rasters feature the lowest value, the first raster will be used for
+the position value.
+If multiband rasters are used in the data raster stack, the algorithm will
+always perform the analysis on the first band of the rasters - use GDAL to use
+other bands in the analysis.
+Any NoData cells in the raster layer stack will result in a NoData cell
+in the output raster unless the "ignore NoData" parameter is checked.
+The output NoData value can be set manually. The output rasters extent and
+resolution is defined by a reference raster layer and is always of ``Int32`` type.
+.. The params description comes from the "Highest position" algorithm
+.. include:: ./rasteranalysis.rst
+  :start-after: .. **positionparams**
+  :end-before: .. **endpositionparams**
+Python code
+...........
+**Algorithm ID**: ``native:lowestpositioninrasterstack``
+.. include:: ../algs_include.rst
+  :start-after: **algorithm_code_section**
+  :end-before: **end_algorithm_code_section**
+
+Tool: Raster boolean AND
+Algorithm ID: native:rasterbooleanand
+Description: Calculates the boolean ``AND`` for a set of input rasters.
+If all of the input rasters have a non-zero value for a pixel, that
+pixel will be set to ``1`` in the output raster.
+If any of the input rasters have ``0`` values for the pixel it will
+be set to ``0`` in the output raster.
+The reference layer parameter specifies an existing raster layer to
+use as a reference when creating the output raster.
+The output raster will have the same extent, CRS, and pixel dimensions
+as this layer.
+By default, a NoData pixel in ANY of the input layers will result in a
+NoData pixel in the output raster.
+If the :guilabel:`Treat NoData values as false` option is checked,
+then NoData inputs will be treated the same as a ``0`` input value.
+.. seealso:: :ref:`qgisrasterbooleanor`
+
+Tool: Raster boolean OR
+Algorithm ID: native:rasterbooleanor
+Description: Calculates the boolean ``OR`` for a set of input rasters.
+If all of the input rasters have a zero value for a pixel, that
+pixel will be set to ``0`` in the output raster.
+If any of the input rasters have ``1`` values for the pixel it will
+be set to ``1`` in the output raster.
+The reference layer parameter specifies an existing raster layer to
+use as a reference when creating the output raster.
+The output raster will have the same extent, CRS, and pixel dimensions
+as this layer.
+By default, a NoData pixel in ANY of the input layers will result in a
+NoData pixel in the output raster.
+If the :guilabel:`Treat NoData values as false` option is checked,
+then NoData inputs will be treated the same as a ``0`` input value.
+.. seealso:: :ref:`qgisrasterbooleanand`
+
+Tool: Raster calculator
+Algorithm ID: native:rastercalc
+Description: Performs algebraic operations using raster layers.
+The resulting layer will have its values computed according to an expression.
+The expression can contain numerical values, operators and references
+to any of the layers in the current project.
+.. Is this still true?
+  .. note:: When using the calculator in :ref:`processing_batch` or from
+  the :ref:`console` the files to use have to be specified.
+  The corresponding layers are referred using the base name of the
+  file (without the full path).
+  For instance, if using a layer at ``path/to/my/rasterfile.tif``,
+  the first band of that layer will be referred as
+  ``rasterfile.tif@1``.
+.. seealso:: :ref:`qgisvirtualrastercalc`, :ref:`gdalrastercalculator`, :ref:`label_raster_calc`
+
+Tool: Raster calculator (virtual)
+Algorithm ID: native:virtualrastercalc
+Description: Performs algebraic operations using raster layers and generates in-memory result.
+The resulting layer will have its values computed according to an expression.
+The expression can contain numerical values, operators and references
+to any of the layers in the current project.
+A virtual raster layer is a raster layer defined by its URI and whose pixels are calculated on-the-fly.
+It's not a new file on disk; the virtual layer is still connected to the rasters used in the calculation
+meaning that deleting or moving these rasters would break it.
+A :guilabel:`Layer name` can be provided, otherwise the calculation expression is used as such.
+Removing the virtual layer from the project deletes it, and it can be made persistent in file using the layer
+:menuselection:`Export --> Save as...` contextual menu.
+.. seealso:: :ref:`qgisrastercalc`, :ref:`gdalrastercalculator`, :ref:`label_raster_calc`
+
+Tool: Raster layer properties
+Algorithm ID: native:rasterlayerproperties
+Description: Returns basic properties of the given raster layer, including the extent,
+size in pixels and dimensions of pixels (in map units), number of bands,
+and NoData value.
+This algorithm is intended for use as a means of extracting these useful properties
+to use as the input values to other algorithms in a model - e.g. to allow to pass
+an existing raster's pixel sizes over to a GDAL raster algorithm.
+
+Tool: Raster layer statistics
+Algorithm ID: native:rasterlayerstatistics
+Description: Calculates basic statistics from the values in a given band of the
+raster layer.
+The output is loaded in the
+:menuselection:`Processing --> Results viewer` menu.
+
+Tool: Raster layer unique values report
+Algorithm ID: native:rasterlayeruniquevaluesreport
+Description: Returns the count and area of each unique value in a given raster layer.
+The calculation of the area is done in the area unit of the layer's CRS.
+
+Tool: Raster layer zonal statistics
+Algorithm ID: native:rasterlayerzonalstats
+Description: Calculates statistics for a raster layer's values, categorized by
+zones defined in another raster layer.
+.. seealso:: :ref:`qgiszonalstatisticsfb`
+
+Tool: Raster surface volume
+Algorithm ID: native:rastersurfacevolume
+Description: Calculates the volume under a raster surface relative to a given base
+level. This is mainly useful for Digital Elevation Models (DEM).
+
+Tool: Reclassify by layer
+Algorithm ID: native:reclassifybylayer
+Description: Reclassifies a raster band by assigning new class values based on the
+ranges specified in a vector table.
+
+Tool: Reclassify by table
+Algorithm ID: native:reclassifybytable
+Description: Reclassifies a raster band by assigning new class values based on the
+ranges specified in a fixed table.
+
+Tool: Rescale raster
+Algorithm ID: native:rescaleraster
+Description: Rescales raster layer to a new value range, while preserving the shape 
+(distribution) of the raster's histogram (pixel values). Input values 
+are mapped using a linear interpolation from the source raster's 
+minimum and maximum pixel values to the destination minimum and miximum 
+pixel range.
+By default the algorithm preserves the original NoData value, but there 
+is an option to override it.
+  Rescaling values of a raster layer from [0 - 50] to [100 - 1000]
+
+Tool: Round raster
+Algorithm ID: native:roundrastervalues
+Description: Rounds the cell values of a raster dataset according to the specified number of decimals.
+Alternatively, a negative number of decimal places may be used to round values
+to powers of a base n. For example, with a Base value n of 10 and Decimal places
+of -1, the algorithm rounds cell values to multiples of 10,
+-2 rounds to multiples of 100, and so on.
+Arbitrary base values may be chosen, the algorithm applies the same multiplicative
+principle. Rounding cell values to multiples of a base n may be used to generalize
+raster layers.
+The algorithm preserves the data type of the input raster. Therefore byte/integer
+rasters can only be rounded to multiples of a base n, otherwise a warning is raised
+and the raster gets copied as byte/integer raster.
+  Rounding values of a raster
+
+Tool: Sample raster values
+Algorithm ID: native:rastersampling
+Description: Extracts raster values at the point locations.
+If the raster layer is multiband, each band is sampled.
+The attribute table of the resulting layer will have as many new
+columns as the raster layer band count.
+
+Tool: Zonal histogram
+Algorithm ID: native:zonalhistogram
+Description: Appends fields representing counts of each unique value from a raster
+layer contained within polygon features.
+The output layer attribute table will have as many fields as the
+unique values of the raster layer that intersects the polygon(s).
+  Raster layer histogram example
+
+Tool: Zonal statistics
+Algorithm ID: native:zonalstatisticsfb
+Description: Calculates statistics of a raster layer for each feature of an
+overlapping polygon vector layer.
+
+Tool: Create constant raster layer
+Algorithm ID: native:createconstantrasterlayer
+Description: Generates raster layer for given extent and cell size filled
+with the specified value.
+Additionally an output data type can be specified.
+The algorithm will abort if a value has been entered that
+cannot be represented by the selected output raster data type.
+
+Tool: Create random raster layer (binomial distribution)
+Algorithm ID: native:createrandombinomialrasterlayer
+Description: Generates a raster layer for given extent and cell size filled with binomially
+distributed random values.
+By default, the values will be chosen given an N of 10 and a probability of 0.5.
+This can be overridden by using the advanced parameter for N and probability.
+The raster data type is set to Integer types (Integer16 by default).
+The binomial distribution random values are defined as positive integer numbers.
+A floating point raster will represent a cast of integer values to floating point.
+
+Tool: Create random raster layer (exponential distribution)
+Algorithm ID: native:createrandomexponentialrasterlayer
+Description: Generates a raster layer for given extent and cell size filled
+with exponentially distributed random values.
+By default, the values will be chosen given a lambda of 1.0.
+This can be overridden by using the advanced parameter for lambda.
+The raster data type is set to Float32 by default as the exponential 
+distribution random values are floating point numbers.
+
+Tool: Create random raster layer (gamma distribution)
+Algorithm ID: native:createrandomgammarasterlayer
+Description: Generates a raster layer for given extent and cell size filled
+with gamma distributed random values.
+By default, the values will be chosen given an alpha and beta value of 1.0.
+This can be overridden by using the advanced parameter for alpha and beta.
+The raster data type is set to Float32 by default as the gamma distribution
+random values are floating point numbers.
+
+Tool: Create random raster layer (geometric distribution)
+Algorithm ID: native:createrandomgeometricrasterlayer
+Description: Generates a raster layer for given extent and cell size filled
+with geometrically distributed random values.
+By default, the values will be chosen given a probability of 0.5.
+This can be overridden by using the advanced parameter for mean value.
+The raster data type is set to Integer types (Integer16 by default).
+The geometric distribution random values are defined as positive integer numbers.
+A floating point raster will represent a cast of integer values to floating point.
+
+Tool: Create random raster layer (negative binomial distribution)
+Algorithm ID: native:createrandomnegativebinomialrasterlayer
+Description: Generates a raster layer for given extent and cell size filled
+with negative binomially distributed random values.
+By default, the values will be chosen given a distribution parameter k of 10.0
+and a probability of 0.5. This can be overridden by using the advanced parameters
+for k and probability. The raster data type is set to Integer types (Integer16 by default).
+The negative binomial distribution random values are defined as positive integer numbers.
+A floating point raster will represent a cast of integer values to floating point.
+
+Tool: Create random raster layer (normal distribution)
+Algorithm ID: native:createrandomnormalrasterlayer
+Description: Generates a raster layer for given extent and cell size filled
+with normally distributed random values.
+By default, the values will be chosen given a mean of 0.0 and a standard deviation of 1.0.
+This can be overridden by using the advanced parameters for mean and standard
+deviation value. The raster data type is set to Float32 by default as the normal
+distribution random values are floating point numbers.
+
+Tool: Create random raster layer (poisson distribution)
+Algorithm ID: native:createrandompoissonrasterlayer
+Description: Generates a raster layer for given extent and cell size filled
+with poisson distributed random values.
+By default, the values will be chosen given a mean of 1.0.
+This can be overridden by using the advanced parameter for mean value.
+The raster data type is set to Integer types (Integer16 by default).
+The poisson distribution random values are positive integer numbers.
+A floating point raster will represent a cast of integer values to floating point.
+
+Tool: Create random raster layer (uniform distribution)
+Algorithm ID: native:createrandomuniformrasterlayer
+Description: Generates a raster layer for given extent and cell size filled with random values.
+By default, the values will range between the minimum and maximum value
+of the specified output raster type. This can be overridden by using
+the advanced parameters for lower and upper bound value.
+If the bounds have the same value or both are zero (default) the algorithm
+will create random values in the full value range of the chosen raster data type.
+Choosing bounds outside the acceptable range of the output raster type
+will abort the algorithm.
+
+Tool: Aspect
+Algorithm ID: qgis:aspect
+Description: Calculates the aspect of the Digital Terrain Model in input.
+The final aspect raster layer contains values from 0 to 360 that
+express the slope direction, starting from north (0°) and continuing
+clockwise.
+   Aspect values
+The following picture shows the aspect layer reclassified with a color
+ramp:
+   Aspect layer reclassified
+
+Tool: based)
+Algorithm ID: native:dtmslopebasedfilter
+Description: Can be used to filter a digital elevation model in order to classify its cells into ground and object (non-ground) cells.
+The tool uses concepts as described by Vosselman (2000)
+and is based on the assumption that a large height difference between two nearby cells is unlikely to be caused by a steep slope in the terrain.
+The probability that the higher cell might be non-ground increases when the distance between the two cells decreases.
+Therefore the filter defines a maximum height difference (``dz_max``) between two cells as a function of the distance (``d``) between the cells (``dz_max( d ) = d``).
+A cell is classified as terrain if there is no cell within the kernel radius
+to which the height difference is larger than the allowed maximum height difference at the distance between these two cells.
+The approximate terrain slope (``s``) parameter is used to modify the filter function
+to match the overall slope in the study area (``dz_max( d ) = d * s``).
+A 5 % confidence interval (``ci = 1.65 * sqrt( 2 * stddev )``) may be used to modify the filter function even further
+by either relaxing (``dz_max( d ) = d * s + ci``) or amplifying (``dz_max( d ) = d * s - ci``) the filter criterium.
+*References: Vosselman, G. (2000): Slope based filtering of laser altimetry data. IAPRS, Vol. XXXIII, Part B3, Amsterdam, The Netherlands, 935-942*
+.. seealso:: This tool is a port of the SAGA `DTM Filter (slope-based) <https://saga-gis.sourceforge.io/saga_tool_doc/9.1.1/grid_filter_7.html>`_
+
+Tool: Hillshade
+Algorithm ID: qgis:hillshade
+Description: Calculates the hillshade raster layer given an input Digital Terrain
+Model.
+The shading of the layer is calculated according to the sun position:
+you have the options to change both the horizontal angle (azimuth) and
+the vertical angle (sun elevation) of the sun.
+   Azimuth and vertical angle
+The hillshade layer contains values from 0 (complete shadow) to 255
+(complete sun).
+Hillshade is used usually to better understand the relief of the area.
+   Hillshade layer with azimuth 300 and vertical angle 45
+Particularly interesting is to give the hillshade layer a transparency
+value and overlap it with the elevation raster:
+   Overlapping the hillshade with the elevation layer
+
+Tool: Hypsometric curves
+Algorithm ID: qgis:hypsometriccurves
+Description: Calculates hypsometric curves for an input Digital Elevation Model.
+Curves are produced as CSV files in an output folder specified by the
+user.
+A hypsometric curve is a cumulative histogram of elevation values in
+a geographical area.
+You can use hypsometric curves to detect differences in the landscape
+due to the geomorphology of the territory.
+
+Tool: Relief
+Algorithm ID: qgis:relief
+Description: Creates a shaded relief layer from digital elevation data.
+You can specify the relief color manually, or you can let the
+algorithm choose automatically all the relief classes.
+   Relief layer
+
+Tool: Ruggedness index
+Algorithm ID: qgis:ruggednessindex
+Description: Calculates the quantitative measurement of terrain heterogeneity
+described by Riley et al. (1999).
+It is calculated for every location, by summarizing the change in
+elevation within the 3x3 pixel grid.
+Each pixel contains the difference in elevation from a center cell and
+the 8 cells surrounding it.
+   Ruggedness layer from low (red) to high values (green)
+
+Tool: Slope
+Algorithm ID: qgis:slope
+Description: Calculates the slope from an input raster layer. The slope is the
+angle of inclination of the terrain and is expressed in **degrees**.
+   Flat areas in red, steep areas in blue
+
+Tool: Align raster
+Algorithm ID: native:alignsingleraster
+Description: Aligns raster by resampling it to the same cell size
+and reprojecting to the same CRS as a reference raster.
+.. warning:: **This algorithm is ONLY available in the** :ref:`Model Designer <processing.modeler>` context.
+ For other contexts, use instead :ref:`qgisalignrasters`.
+
+Tool: Align rasters
+Algorithm ID: native:alignrasters
+Description: Aligns rasters by resampling them to the same cell size
+and reprojecting to the same CRS as a reference raster.
+.. warning:: **This algorithm is NOT available in the** :ref:`Model Designer <processing.modeler>` context.
+ Use instead :ref:`qgisalignsingleraster`.
+
+Tool: Convert map to raster
+Algorithm ID: native:rasterize
+Description: Creates a raster image of map canvas content.
+A :ref:`map theme <map_themes>` can be selected to render a
+predetermined set of layers with a defined style for each layer.
+Alternatively, a single layer can be selected if no map theme is set.
+If neither map theme nor layer is set, the current map content will be
+rendered.
+The minimum extent entered will internally be extended to be a
+multiple of the tile size.
+
+Tool: Fill NoData cells
+Algorithm ID: native:fillnodata
+Description: Resets the NoData values in the input raster to a chosen value, resulting in
+raster dataset with no NoData pixels.
+The algorithm respects the input raster data type, e.g. a floating point
+fill value will be truncated when applied to an integer raster.
+  Filling NoData values (in grey) of a raster
+
+Tool: Generate XYZ tiles (Directory)
+Algorithm ID: native:tilesxyzdirectory
+Description: Generates raster “XYZ” tiles using the current QGIS project
+as individual images to a directory structure.
+Optionally, a Leaflet HTML output file using the generated
+tiles as a map layer could be created.
+
+Tool: Generate XYZ tiles (MBTiles)
+Algorithm ID: native:tilesxyzmbtiles
+Description: Generates raster “XYZ” tiles using the current QGIS project
+as a single file in the “MBTiles” format.
+
+Tool: Basic statistics for fields
+Algorithm ID: qgis:basicstatisticsforfields
+Description: Generates basic statistics for a field of the attribute table of a
+vector layer.
+Numeric, date, time and string fields are supported.
+The statistics returned will depend on the field type.
+Statistics are generated as an HTML file and are available in the
+:menuselection:`Processing --> Results viewer`.
+**Default menu**: :menuselection:`Vector --> Analysis Tools`
+
+Tool: Climb along line
+Algorithm ID: qgis:climbalongline
+Description: Calculates the total climb and descent along line geometries.
+The input layer must have Z values present. If Z values are not
+available, the  :ref:`qgissetzfromraster` algorithm may be used to add
+Z values from a DEM layer.
+The output layer is a copy of the input layer with additional fields
+that contain the total climb (``climb``), total descent (``descent``),
+the minimum elevation (``minelev``) and the maximum elevation
+(``maxelev``) for each line geometry.
+If the input layer contains fields with the same names as these added
+fields, they will be renamed (field names will be altered to "name_2",
+"name_3", etc, finding the first non-duplicate name).
+
+Tool: Count points in polygon
+Algorithm ID: native:countpointsinpolygon
+Description: Takes a point and a polygon layer and counts the number of points from
+the point layer in each of the polygons of the polygon layer.
+A new polygon layer is generated, with the exact same content as the
+input polygon layer, but containing an additional field with the
+points count corresponding to each polygon.
+  The labels in the polygons show the point count
+An optional weight field can be used to assign weights to each point.
+Alternatively, a unique class field can be specified.
+If both options are used, the weight field will take precedence and
+the unique class field will be ignored.
+:ref:`features in-place modification <processing_inplace_edit>` 
+of polygon features
+``Default menu``: :menuselection:`Vector --> Analysis Tools`
+
+Tool: DBSCAN clustering
+Algorithm ID: native:dbscanclustering
+Description: Clusters point features based on a 2D implementation of Density-based
+spatial clustering of applications with noise (DBSCAN) algorithm.
+The algorithm requires two parameters, a minimum cluster size,
+and the maximum distance allowed between clustered points.
+.. seealso:: :ref:`qgisstdbscanclustering`, :ref:`qgiskmeansclustering`
+
+Tool: Distance matrix
+Algorithm ID: qgis:distancematrix
+Description: Calculates for point features distances to their nearest features in
+the same layer or in another layer.
+.. seealso:: :ref:`qgisjoinbynearest`
+
+Tool: Distance to nearest hub (line to hub)
+Algorithm ID: qgis:distancetonearesthublinetohub
+Description: Creates lines that join each feature of an input vector to the nearest
+feature in a destination layer.
+Distances are calculated based on the
+:ref:`center <qgispointonsurface>` of each feature.
+  Display the nearest hub for the red input features
+   :ref:`qgisjoinbynearest`
+
+Tool: Distance to nearest hub (points)
+Algorithm ID: qgis:distancetonearesthubpoints
+Description: Creates a point layer representing the
+:ref:`center <qgispointonsurface>` of the input features with the
+addition of two fields containing the identifier of the nearest
+feature (based on its center point) and the distance between the
+points.
+   :ref:`qgisjoinbynearest`
+
+Tool: Join by lines (hub lines)
+Algorithm ID: native:hublines
+Description: Creates hub and spoke diagrams by connecting lines from points on
+the Spoke layer to matching points in the Hub layer.
+Determination of which hub goes with each point is based on a match
+between the Hub ID field on the hub points and the Spoke ID field on
+the spoke points.
+If input layers are not point layers, a point on the surface of the
+geometries will be taken as the connecting location.
+Optionally, geodesic lines can be created, which represent the
+shortest path on the surface of an ellipsoid.
+When geodesic mode is used, it is possible to split the created lines
+at the antimeridian (±180 degrees longitude), which can improve
+rendering of the lines.
+Additionally, the distance between vertices can be specified.
+A smaller distance results in a denser, more accurate line.
+  Join points based on a common field / attribute
+
+Tool: means clustering
+Algorithm ID: native:kmeansclustering
+Description: Calculates the 2D distance based k-means cluster number for each input
+feature.
+K-means clustering aims to partition the features into k clusters in
+which each feature belongs to the cluster with the nearest mean.
+The mean point is represented by the barycenter of the clustered
+features.
+If input geometries are lines or polygons, the clustering is based on
+the centroid of the feature.
+  A five class point clusters
+.. seealso:: :ref:`qgisdbscanclustering`, :ref:`qgisstdbscanclustering`
+
+Tool: List unique values
+Algorithm ID: qgis:listuniquevalues
+Description: Lists unique values of an attribute table field and counts their
+number.
+**Default menu**: :menuselection:`Vector --> Analysis Tools`
+
+Tool: Mean coordinate(s)
+Algorithm ID: native:meancoordinates
+Description: Computes a point layer with the center of mass of geometries in an
+input layer.
+An attribute can be specified as containing weights to be applied to
+each feature when computing the center of mass.
+If an attribute is selected in the parameter, features will be grouped
+according to values in this field.
+Instead of a single point with the center of mass of the whole layer,
+the output layer will contain a center of mass for the features in
+each category.
+**Default menu**: :menuselection:`Vector --> Analysis Tools`
+
+Tool: Nearest neighbour analysis
+Algorithm ID: native:nearestneighbouranalysis
+Description: Performs nearest neighbor analysis for a point layer. The output tells you
+how your data are distributed (clustered, randomly or distributed).
+Output is generated as an HTML file with the computed statistical
+values:
+* Observed mean distance
+* Expected mean distance
+* Nearest neighbour index
+* Number of points
+* Z-Score: Comparing the Z-Score with the normal distribution tells
+  you how your data are distributed.
+  A low Z-Score means that the data are unlikely to be the result of a
+  spatially random process, while a high Z-Score means that your data
+  are likely to be a result of a spatially random process.
+.. seealso:: :ref:`qgisjoinbynearest`
+
+Tool: Overlap analysis
+Algorithm ID: native:calculatevectoroverlaps
+Description: Calculates the area and percentage cover by which features from an
+input layer are overlapped by features from a selection of overlay
+layers.
+New attributes are added to the output layer reporting the
+total area of overlap and percentage of the input feature
+overlapped by each of the selected overlay layers.
+
+Tool: Shortest line between features
+Algorithm ID: native:shortestline
+Description: Creates a line layer as the shortest line between the source and the destination layer. By default only the first nearest feature of the destination layer is taken into account. The n-nearest neighboring features number can be specified.
+If a maximum distance is specified, then only features which are closer than this distance will be considered.
+The output features will contain all the source layer attributes, all the attributes from the n-nearest feature and the additional field of the distance.
+.. important:: This algorithm uses purely Cartesian calculations for distance,
+  and does not consider geodetic or ellipsoid properties when determining
+  feature proximity. The measurement and output coordinate system is based
+  on the coordinate system of the source layer.
+   Shortest line from point features to lines
+
+Tool: DBSCAN clustering
+Algorithm ID: native:stdbscanclustering
+Description: Clusters point features based on a 2D implementation of spatiotemporal
+Density-based clustering of applications with noise (ST-DBSCAN) algorithm.
+.. seealso:: :ref:`qgisdbscanclustering`, :ref:`qgiskmeansclustering`
+
+Tool: Statistics by categories
+Algorithm ID: qgis:statisticsbycategories
+Description: Calculates statistics of a field depending on a parent class.
+The parent class is a combination of values from other fields.
+
+Tool: Sum line lengths
+Algorithm ID: native:sumlinelengths
+Description: Takes a polygon layer and a line layer and measures the total length
+of lines and the total number of them that cross each polygon.
+The resulting layer has the same features as the input polygon layer,
+but with two additional attributes containing the length and count of
+the lines across each polygon.
+:ref:`features in-place modification <processing_inplace_edit>` 
+of polygon features
+**Default menu**: :menuselection:`Vector --> Analysis Tools`
+
+Tool: Array of offset (parallel) lines
+Algorithm ID: native:arrayoffsetlines
+Description: Creates copies of line features in a layer, by creating multiple
+offset versions of each feature.
+Each new version is incrementally offset by a specified distance.
+Positive distance will offset lines to the left, and negative
+distances will offset them to the right.
+   In blue the source layer, in red the offset one
+of line features
+.. seealso:: :ref:`qgisoffsetline`, :ref:`qgisarraytranslatedfeatures`
+
+Tool: Array of translated features
+Algorithm ID: native:arraytranslatedfeatures
+Description: Creates copies of features in a layer by creating multiple translated
+versions of each.
+Each copy is incrementally displaced by a preset amount in the X, Y
+and/or Z axis.
+M values present in the geometry can also be translated.
+   Input layers in blue tones, output layers with translated features
+   in red tones
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
+.. seealso:: :ref:`qgistranslategeometry`, :ref:`qgisarrayoffsetlines`
+
+Tool: Create grid
+Algorithm ID: native:creategrid
+Description: Creates a vector layer with a grid covering a given extent.
+Grid cells can have different shapes:
+  Different grid cell shapes applied to the same extent, without overlaps
+The size and/or placement of each element in the grid is defined using a horizontal and
+vertical spacing.
+The CRS of the output layer must be defined.
+The grid extent and the spacing values must be expressed in the
+coordinates and units of this CRS.
+**Default menu**: :menuselection:`Vector --> Research Tools`
+
+Tool: Create points layer from table
+Algorithm ID: native:createpointslayerfromtable
+Description: Creates points layer from a table with columns that contain
+coordinates fields.
+Besides X and Y coordinates you can also specify Z and M fields.
+
+Tool: Generate points (pixel centroids) along line
+Algorithm ID: qgis:generatepointspixelcentroidsalongline
+Description: Generates a point vector layer from an input raster and line layer.
+The points correspond to the pixel centroids that intersect the line
+layer.
+  Points of the pixel centroids
+
+Tool: Generate points (pixel centroids) inside polygon
+Algorithm ID: native:generatepointspixelcentroidsinsidepolygons
+Description: Generates a point vector layer from an input raster and polygon layer.
+The points correspond to the pixel centroids that intersect the
+polygon layer.
+  Points of the pixel centroids
+
+Tool: Import geotagged photos
+Algorithm ID: native:importphotos
+Description: Creates a point layer corresponding to the geotagged locations from
+JPEG or HEIC/HEIF images from a source folder.
+The point layer will contain a single PointZ feature per input file
+from which the geotags could be read.
+Any altitude information from the geotags will be used to set the
+point's Z value.
+Besides longitude and latitude also altitude, direction and timestamp
+information, if present in the photo, will be added to the point as
+attributes.
+
+Tool: Points to path
+Algorithm ID: native:pointstopath
+Description: Converts a point layer to a line layer, by joining points in an
+order defined by an expression or a field in the input point layer.
+Points can be grouped by a field or an expression to distinguish line features.
+In addition to the line vector layer, a text file is output
+that describes the resulting line as a start point and a
+sequence of bearings / directions (relative to azimuth) and
+distances.
+
+Tool: Random points along line
+Algorithm ID: qgis:qgisrandompointsalongline
+Description: Creates a new point layer, with points placed on the lines of another
+layer.
+For each line in the input layer, a given number of points is added
+to the resulting layer.
+The procedure for adding a point is to:
+1. randomly select a line feature from the input layer
+2. if the feature is multi-part, randomly select a part of it
+3. randomly select a segment of that line
+4. randomly select a position on that segment.
+The procedure means that curved parts of the lines (with relatively
+short segments) will get more points than straight parts (with
+relatively long segments), as demonstrated in the illustration below,
+where the output of the *Random points along lines* algorithm can be
+compared with the output of the *Random points on lines* algorithm
+(that produces points with an, on average, even distribution along
+the lines).
+   Example algorithm output. Left: *Random points along line*, right:
+   *Random points on lines*
+A minimum distance can be specified, to avoid points being too close
+to each other.
+.. seealso:: :ref:`qgisrandompointsonlines`
+
+Tool: Random points in extent
+Algorithm ID: native:randompointsinextent
+Description: Creates a new point layer with a given number of random points, all
+of them within a given extent.
+A distance factor can be specified, to avoid points being too close to each 
+other. If the minimum distance between points makes it impossible to create new 
+points, either distance can be decreased or the maximum number of attempts may 
+be increased.
+**Default menu**: :menuselection:`Vector --> Research Tools`
+
+Tool: Random points in layer bounds
+Algorithm ID: qgis:randompointsinlayerbounds
+Description: Creates a new point layer with a given number of random points,
+all of them within the extent of a given layer.
+A minimum distance can be specified, to avoid points being too
+close to each other.
+**Default menu**: :menuselection:`Vector --> Research Tools`
+
+Tool: Random points in polygons
+Algorithm ID: native:randompointsinpolygons
+Description: Creates a point layer with points placed inside the polygons of
+another layer.
+For each feature (polygon / multi-polygon) geometry in the input
+layer, the given number of points is added to the result layer.
+Per feature and global minimum distances can be specified in order to
+avoid points being too close in the output point layer.
+If a minimum distance is specified, it may not be possible to generate
+the specified number of points for each feature.
+The total number of generated points and missed points are available
+as output from the algorithm.
+The illustration below shows the effect of per feature and global
+minimum distances and zero/non-zero minimum distances (generated with
+the same seed, so at least the first point generated will be the
+same).
+   Ten points per polygon feature, *left*: min. distances = 0,
+   *middle*: min.distances = 1, *right*: min. distance = 1,
+   global min. distance = 0
+The maximum number of tries per point can be specified.
+This is only relevant for non-zero minimum distance.
+A seed for the random number generator can be provided, making it
+possible to get identical random number sequences for different runs
+of the algorithm.
+The attributes of the polygon feature on which a point was generated
+can be included (:guilabel:`Include polygon attributes`).
+If you want approximately the same point density for all the
+features, you can data-define the number of points using the area of
+the polygon feature geometry.
+.. seealso:: :ref:`qgisrandompointsinsidepolygons`
+
+Tool: Random points inside polygons
+Algorithm ID: qgis:randompointsinsidepolygons
+Description: Creates a new point layer with a given number of random points
+inside each polygon of the input polygon layer.
+Two sampling strategies are available:
+* Points count: number of points for each feature
+* Points density: density of points for each feature
+A minimum distance can be specified, to avoid points being too close
+to each other.
+.. seealso:: :ref:`qgisrandompointsinpolygons`
+
+Tool: Random points on lines
+Algorithm ID: native:randompointsonlines
+Description: Creates a point layer with points placed on the lines of another
+layer.
+For each feature (line / multi-line) geometry in the input layer, the
+given number of points is added to the result layer.
+Per feature and global minimum distances can be specified in order to
+avoid points being too close in the output point layer.
+If a minimum distance is specified, it may not be possible to generate
+the specified number of points for each feature.
+The total number of generated points and missed points are available
+as output from the algorithm.
+The illustration below shows the effect of per feature and global
+minimum distances and zero/non-zero minimum distances (generated with
+the same seed, so at least the first point generated will be the
+same).
+   Five points per line feature, *left*: min. distances = 0,
+   *middle*: min.distances != 0, *right*: min. distance != 0,
+   global min. distance = 0
+The maximum number of tries per point can be specified.
+This is only relevant for non-zero minimum distance.
+A seed for the random number generator can be provided, making it
+possible to get identical random number sequences for different runs
+of the algorithm.
+The attributes of the line feature on which a point was generated can
+be included (:guilabel:`Include line attributes`).
+If you want approximately the same point density for all the line
+features, you can data-define the number of points using the length of
+the line feature geometry.
+.. seealso:: :ref:`qgisrandompointsalongline`
+
+Tool: Raster pixels to points
+Algorithm ID: native:pixelstopoints
+Description: Creates a vector layer of points corresponding to each pixel in a
+raster layer.
+Converts a raster layer to a vector layer, by creating point features
+for each individual pixel's center in the raster layer.
+Any NoData  pixels are skipped in the output.
+
+Tool: Raster pixels to polygons
+Algorithm ID: native:pixelstopolygons
+Description: Creates a vector layer of polygons corresponding to each pixel in a
+raster layer.
+Converts a raster layer to a vector layer, by creating polygon
+features for each individual pixel's extent in the raster layer.
+Any NoData  pixels are skipped in the output.
+
+Tool: Regular points
+Algorithm ID: qgis:regularpoints
+Description: Creates a new point layer with its points placed in a regular grid
+within a given extent.
+The grid is specified either by the spacing between the points (same
+spacing for all dimensions) or by the number of points to generate.
+In the latter case, the spacing will be determined from the extent.
+In order to generate a full rectangular grid, at least the number of
+points specified by the user is generated for the latter case.
+Random offsets to the point spacing can be applied, resulting in a
+non-regular point pattern.
+**Default menu**: :menuselection:`Vector --> Research Tools`
+
+Tool: Assign projection
+Algorithm ID: native:assignprojection
+Description: Assigns a new projection to a vector layer.
+It creates a new layer with the exact same features and geometries as
+the input one, but assigned to a new CRS. The geometries are **not**
+reprojected, they are just assigned to a different CRS.
+This algorithm can be used to repair layers which have been assigned
+an incorrect projection.
+Attributes are not modified by this algorithm.
+   :ref:`qgisfindprojection`, :ref:`qgisreprojectlayer`
+
+Tool: Batch Nominatim geocoder
+Algorithm ID: native:batchnominatimgeocoder
+Description: Performs batch geocoding using the Nominatim service against an input
+layer string field.
+The output layer will have a point geometry reflecting the geocoded location
+as well as a number of attributes associated to the geocoded location.
+:ref:`features in-place modification <processing_inplace_edit>` 
+of point features
+.. note:: This algorithm is compliant with the `usage policy
+ <https://operations.osmfoundation.org/policies/nominatim/>`_ of the
+ Nominatim geocoding service provided by the OpenStreetMap Foundation.
+
+Tool: Convert layer to spatial bookmarks
+Algorithm ID: native:layertobookmarks
+Description: Creates spatial bookmarks corresponding to the extent of features
+contained in a layer.
+
+Tool: Convert spatial bookmarks to layer
+Algorithm ID: native:bookmarkstolayer
+Description: Creates a new layer containing polygon features for stored spatial
+bookmarks.
+The export can be filtered to only bookmarks belonging to the current
+project, to all user bookmarks, or a combination of both.
+
+Tool: Create attribute index
+Algorithm ID: native:createattributeindex
+Description: Creates an index against a field of the attribute table to speed up
+queries.
+The support for index creation depends on both the layer's data
+provider and the field type.
+No outputs are created: the index is stored on the layer itself.
+
+Tool: Create spatial index
+Algorithm ID: native:createspatialindex
+Description: Creates an index to speed up access to the features in a layer based
+on their spatial location.
+Support for spatial index creation is dependent on the layer's data
+provider.
+No new output layers are created.
+**Default menu**: :menuselection:`Vector --> Data Management Tools`
+
+Tool: Define Shapefile projection
+Algorithm ID: qgis:definecurrentprojection
+Description: Sets the CRS (projection) of an existing Shapefile format dataset to
+the provided CRS.
+It is very useful when a Shapefile format dataset is missing the
+``prj`` file and you know the correct projection.
+Contrary to the :ref:`qgisassignprojection` algorithm, it modifies the
+current layer and will not output a new layer.
+.. note:: For Shapefile datasets, the ``.prj`` and ``.qpj`` files will
+   be overwritten - or created if missing - to match the provided CRS.
+ :ref:`qgisreprojectlayer`
+
+Tool: Delete duplicate geometries
+Algorithm ID: native:deleteduplicategeometries
+Description: Finds and removes duplicated geometries.
+Attributes are not checked, so in case two features have identical
+geometries but different attributes, only one of them will be added to
+the result layer.
+   :ref:`qgisremovenullgeometries`,
+   :ref:`qgisremoveduplicatesbyattribute`
+
+Tool: Delete duplicates by attribute
+Algorithm ID: native:removeduplicatesbyattribute
+Description: Deletes duplicate rows by only considering the specified field
+/ fields.
+The first matching row will be retained, and duplicates will be
+discarded.
+Optionally, these duplicate records can be saved to a separate
+output for analysis.
+.. seealso:: :ref:`qgisdeleteduplicategeometries`
+
+Tool: Detect dataset changes
+Algorithm ID: native:detectvectorchanges
+Description: Compares two vector layers, and determines which features are
+unchanged, added or deleted between the two.
+It is designed for comparing two different versions of the same
+dataset.
+  Detect dataset change example
+
+Tool: Drop geometries
+Algorithm ID: native:dropgeometries
+Description: Creates a simple *geometryless* copy of the input layer attribute
+table.
+It keeps the attribute table of the source layer.
+If the file is saved in a local folder, you can choose between many
+file formats.
+of point, line, and polygon features
+   :ref:`qgisremovenullgeometries`
+
+Tool: Execute SQL
+Algorithm ID: qgis:executesql
+Description: Runs a simple or complex query based only on SELECT with ``SQL`` syntax 
+on the source layer.
+Input datasources are identified with ``input1``, ``input2``... ``inputN`` and
+a simple query will look like ``SELECT * FROM input1``.
+Beside a simple query, you can add expressions or variables within the 
+``SQL query`` parameter itself. This is particulary useful if this algorithm is
+executed within a Processing model and you want to use a model input as a
+parameter of the query. An example of a query will then be ``SELECT * FROM 
+[% @table %]`` where ``@table`` is the variable that identifies the model input.
+The result of the query will be added as a new layer.
+   :ref:`qgispostgisexecutesql`
+
+Tool: Export layers to DXF
+Algorithm ID: native:dxfexport
+Description: Exports layers to DXF file. For each layer, you can choose a field whose values
+are used to split features in generated destination layers in DXF output.
+.. seealso:: :ref:`create_dxf_files`
+
+Tool: Extract selected features
+Algorithm ID: native:saveselectedfeatures
+Description: Saves the selected features as a new layer.
+.. note:: If the selected layer has no selected features, the newly
+   created layer will be empty.
+
+Tool: Extract Shapefile encoding
+Algorithm ID: native:shpencodinginfo
+Description: Extracts the attribute encoding information embedded in a Shapefile.
+Both the encoding specified by an optional :file:`.cpg` file and
+any encoding details present in the :file:`.dbf` LDID header block are considered.
+
+Tool: Find projection
+Algorithm ID: qgis:findprojection
+Description: Creates a shortlist of candidate coordinate reference systems, for
+instance for a layer with an unknown projection.
+The area that the layer is expected to cover must be specified via the
+target area parameter.
+The coordinate reference system for this target area must be known to
+QGIS.
+The algorithm operates by testing the layer's extent in every known
+reference system and then listing any for which the bounds would be
+near the target area if the layer was in this projection.
+   :ref:`qgisdefinecurrentprojection`, :ref:`qgisreprojectlayer`
+
+Tool: Flatten relationship
+Algorithm ID: native:flattenrelationships
+Description: Flattens a :ref:`relationship <vector_relations>` for a vector layer,
+exporting a single layer containing one parent feature per 
+related child feature. This master feature contains all the 
+attributes for the related features.
+This allows to have the relation as a plain table that can be e.g. exported to CSV.
+  Form of a region with related children (left) - A duplicate region feature for each related child, with joined attributes (right)
+
+Tool: Join attributes by field value
+Algorithm ID: native:joinattributestable
+Description: Takes an input vector layer and creates a new vector layer that is an
+extended version of the input one, with additional attributes in its
+attribute table.
+The additional attributes and their values are taken from a second
+vector layer.
+An attribute is selected in each of them to define the join criteria.
+   :ref:`qgisjoinattributesbylocation`
+
+Tool: Join attributes by location
+Algorithm ID: native:joinattributesbylocation
+Description: Takes an input vector layer and creates a new vector layer that is an
+extended version of the input one, with additional attributes in its
+attribute table.
+The additional attributes and their values are taken from a second
+vector layer.
+A spatial criteria is applied to select the values from the second
+layer that are added to each feature from the first layer.
+   :ref:`qgisjoinattributestable`, :ref:`qgisjoinbylocationsummary`
+Exploring spatial relations
+...........................
+.. include:: ../algs_include.rst
+   :start-after: **geometric_predicates**
+   :end-before: **end_geometric_predicates**
+
+Tool: Join attributes by location (summary)
+Algorithm ID: qgis:joinbylocationsummary
+Description: Takes an input vector layer and creates a new vector layer that is an
+extended version of the input one, with additional attributes in its
+attribute table.
+The additional attributes and their values are taken from a second
+vector layer.
+A spatial criteria is applied to select the values from the second
+layer that are added to each feature from the first layer.
+The algorithm calculates a statistical summary for the values from
+matching features in the second layer (e.g. maximum value, mean value,
+etc).
+Exploring spatial relations
+...........................
+.. include:: ../algs_include.rst
+   :start-after: **geometric_predicates**
+   :end-before: **end_geometric_predicates**
+
+Tool: Join attributes by nearest
+Algorithm ID: native:joinbynearest
+Description: Takes an input vector layer and creates a new vector
+layer with additional fields in its attribute table.
+The additional attributes and their values are taken from a second
+vector layer.
+Features are joined by finding the closest features from each layer.
+By default only the nearest feature is joined, but the join can also
+join to the k-nearest neighboring features.
+If a maximum distance is specified, only features which are closer
+than this distance will be matched.
+   :ref:`qgisjoinattributestable`,
+   :ref:`qgisjoinattributesbylocation`, :ref:`qgisdistancematrix`
+
+Tool: Merge vector layers
+Algorithm ID: native:mergevectorlayers
+Description: Combines multiple vector layers of the **same geometry** type into a
+single one.
+The attribute table of the resulting layer will contain the fields from all
+input layers. If fields with the same name but different types are found then
+the exported field will be automatically converted into a string type field.
+New fields storing the original layer name and source are also added.
+If any input layers contain Z or M values, then the output layer will
+also contain these values.
+Similarly, if any of the input layers are multi-part, the output layer
+will also be a multi-part layer.
+Optionally, the destination coordinate reference system (CRS) for the
+merged layer can be set. If it is not set, the CRS will be taken from
+the first input layer.
+All layers will be reprojected to match this CRS.
+.. seealso:: :ref:`qgissplitvectorlayer`
+
+Tool: Order by expression
+Algorithm ID: native:orderbyexpression
+Description: Sorts a vector layer according to an expression: changes the feature
+index according to an expression.
+Be careful, it might not work as expected with some providers, the
+order might not be kept every time.
+
+Tool: Repair Shapefile
+Algorithm ID: native:repairshapefile
+Description: Repairs a broken ESRI Shapefile dataset by (re)creating the SHX file.
+
+Tool: Reproject layer
+Algorithm ID: native:reprojectlayer
+Description: Reprojects a vector layer in a different CRS. The reprojected layer
+will have the same features and attributes of the input layer.
+of point, line, and polygon features
+   :ref:`qgisdefinecurrentprojection`, :ref:`qgisfindprojection`
+
+Tool: Save vector features to file
+Algorithm ID: native:savefeatures
+Description: Saves vector features to a specified file dataset.
+For dataset formats supporting layers, an optional layer name parameter
+can be used to specify a custom string. Optional GDAL-defined dataset and
+layer options can be specified. For more information on this, read the online
+`GDAL documentation <https://gdal.org/drivers/vector/index.html>`_ on the format.
+
+Tool: Set layer encoding
+Algorithm ID: native:setlayerencoding
+Description: Sets the encoding used for reading a layer's attributes.
+No permanent changes are made to the layer, rather it affects only
+how the layer is read during the current session.
+.. note:: Changing the encoding is only supported for some vector layer data sources.
+
+Tool: Split features by character
+Algorithm ID: native:splitfeaturesbycharacter
+Description: Features are split into multiple output features by splitting
+a field's value at a specified character.
+For instance, if a layer contains features with multiple
+comma separated values contained in a single field, this
+algorithm can be used to split these values up across multiple
+output features.
+Geometries and other attributes remain unchanged in the output.
+Optionally, the separator string can be a regular expression
+for added flexibility.
+:ref:`features in-place modification <processing_inplace_edit>` 
+of point, line, and polygon features
+
+Tool: Split vector layer
+Algorithm ID: native:splitvectorlayer
+Description: Creates a set of vectors in an output folder based on an input layer
+and an attribute.
+The output folder will contain as many layers as the unique values
+found in the desired field.
+The number of files generated is equal to the number of different
+values found for the specified attribute.
+It is the opposite operation of *merging*.
+.. seealso:: :ref:`qgismergevectorlayers`
+
+Tool: Truncate table
+Algorithm ID: native:truncatetable
+Description: Truncates a layer, by deleting all features from within the layer.
+.. warning:: This algorithm modifies the layer in place, and deleted
+   features cannot be restored!
+
+Tool: Add geometry attributes
+Algorithm ID: qgis:exportaddgeometrycolumns
+Description: Computes geometric properties of the features in a vector layer and
+includes them in the output layer.
+It generates a new vector layer with the same content as the input one,
+but with additional attributes, containing geometric measurements
+based on a selected CRS.
+The attributes added to the table depend on the geometry type and
+dimension of the input layer:
+* for **point** layers: X (``xcoord``), Y (``ycoord``), Z (``zcoord``)
+  coordinates and/or M value (``mvalue``)
+* for **line** layers: ``length`` and, for the LineString and
+  CompoundCurve geometry types, the feature ``sinuosity`` and straight
+  distance (``straightdis``)
+* for **polygon** layers: ``perimeter`` and ``area``
+**Default menu**: :menuselection:`Vector --> Geometry Tools`
+
+Tool: Affine transform
+Algorithm ID: native:affinetransform
+Description: Applies an affine transformation to the layer geometries.
+Affine transformations can include translation, scaling and rotation.
+The operations are performed in the following order: scale, rotation, and translation.
+Z and M values (if present) can be translated and scaled.
+   Vector point layer (green dots) before (left), and after (right) an affine transformation (translation). 
+:ref:`features in-place modification <processing_inplace_edit>` 
+of point, line, and polygon features
+.. seealso:: :ref:`qgistranslategeometry`
+
+Tool: Aggregate
+Algorithm ID: native:aggregate
+Description: Takes a vector or table layer and creates a new layer by aggregating
+features based on a ``group by`` expression.
+Features for which ``group by`` expression returns the same value are
+grouped together.
+It is possible to group all source features together using constant
+value in ``group by`` parameter, example: NULL.
+It is also possible to group features by multiple fields using Array
+function, example: Array("Field1", "Field2").
+Geometries (if present) are combined into one multipart geometry for
+each group.
+Output attributes are computed depending on each given aggregate
+definition.
+This algorithm allows to use the default
+:ref:`aggregates functions <aggregates_function>` of the QGIS Expression engine.
+.. seealso:: :ref:`qgiscollect`, :ref:`qgisdissolve`
+
+Tool: Boundary
+Algorithm ID: native:boundary
+Description: Returns the closure of the combinatorial boundary of the input
+geometries (i.e. the topological boundary of the geometry).
+Only for polygon and line layers.
+For **polygon geometries** , the boundary consists of all the lines
+making up the rings of the polygon.
+   Boundaries (black dashed line) of the source polygon layer
+For **lines geometries**, the boundaries are their end points.
+   Boundary layer (red points) for lines. In yellow a selected feature.
+
+Tool: Bounding boxes
+Algorithm ID: native:boundingboxes
+Description: Calculates the bounding box (envelope) of each feature in an input layer.
+Polygon and line geometries are supported.
+   Black lines represent the bounding boxes of each polygon feature
+:ref:`features in-place modification <processing_inplace_edit>` 
+of polygon features
+.. seealso:: :ref:`qgisminimumboundinggeometry`
+
+Tool: Buffer
+Algorithm ID: native:buffer
+Description: Computes a buffer area for all the features in an input layer, using
+a fixed or data defined distance.
+It is possible to use a negative distance for polygon input layers.
+In this case the buffer will result in a smaller polygon (setback).
+   Buffer (in yellow) of points, line, polygon with positive buffer, 
+   and polygon with negative buffer 
+:ref:`features in-place modification <processing_inplace_edit>` 
+of polygon features
+   :ref:`qgismultiringconstantbuffer`, :ref:`qgisbufferbym`
+
+Tool: Centroids
+Algorithm ID: native:centroids
+Description: Creates a new point layer, with points representing the centroids
+of the geometries of the input layer.
+The centroid is a single point representing the barycenter (of all
+parts) of the feature, so it can be outside the feature borders.
+But can also be a point on each part of the feature.
+The attributes of the points in the output layer are the same
+as for the original features.
+   The red stars represent the centroids of the features of the
+   input layer.
+:ref:`features in-place modification <processing_inplace_edit>`
+of point features
+.. seealso:: :ref:`qgispointonsurface`
+
+Tool: Check validity
+Algorithm ID: qgis:checkvalidity
+Description: Performs a validity check on the geometries of a vector layer.
+The geometries are classified in three groups (valid, invalid and
+error) and for each group, a vector layer with its features is
+generated:
+* The **Valid output** layer contains only the valid features (without
+  topological errors).
+* The **Invalid output** layer contains all the invalid features found
+  by the algorithm.
+* The **Error output** layer is a point layer that points to where the
+  invalid features were found.
+The attribute tables of the generated layers will contain some
+additional information ("message" for the **error** layer, "FID" and
+"_errors" for the **invalid** layer and  only "FID" for the **valid**
+layer):
+The attribute table of each generated vector layer will contain some
+additional information (number of errors found and types of error):
+   Left: the input layer. Right: the valid layer (green), the invalid
+   layer (orange)
+   :ref:`geometry_checker`
+
+Tool: Collect geometries
+Algorithm ID: native:collect
+Description: Takes a vector layer and collects its geometries into new multipart
+geometries.
+One or more attributes can be specified to collect only geometries
+belonging to the same class (having the same value for the specified
+attributes), alternatively all geometries can be collected.
+All output geometries will be converted to multi geometries, even
+those with just a single part.
+This algorithm does not dissolve overlapping geometries - they will
+be collected together without modifying the shape of each geometry
+part.
+See the 'Promote to multipart' or 'Aggregate' algorithms for
+alternative options.
+   :ref:`qgisdissolve`
+
+Tool: Concave hull
+Algorithm ID: native:concavehull
+Description: Computes the concave hull of the features from an input point layer.
+    Concave hulls with different thresholds (0.3, 0.6, 0.9)
+.. seealso:: :ref:`qgisconvexhull`
+
+Tool: Convert geometry type
+Algorithm ID: qgis:convertgeometrytype
+Description: Generates a new layer based on an existing one, with a different type
+of geometry.
+The attribute table of the output layer is the same as the one of
+the input layer.
+Not all conversions are possible. For instance, a line layer
+can be converted to a point layer, but a point layer cannot
+be converted to a line layer.
+   :ref:`qgispointstopath`
+
+Tool: Convert to curved geometries
+Algorithm ID: native:converttocurves
+Description: Converts a geometry into its curved geometry equivalent.
+Already curved geometries will be retained without change.
+:ref:`features in-place modification <processing_inplace_edit>`
+of line and polygon features
+
+Tool: Convex hull
+Algorithm ID: native:convexhull
+Description: Calculates the convex hull for each feature in an input layer.
+See the 'Minimum bounding geometry' algorithm for a convex hull
+calculation which covers the whole layer or grouped subsets of
+features.
+   Black lines identify the convex hull for each layer feature
+:ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
+   :ref:`qgisconcavehull`
+
+Tool: Create layer from extent
+Algorithm ID: native:extenttolayer
+Description: Creates a new vector layer that contains a single feature with
+geometry matching the extent of the input layer.
+It can be used in models to convert a literal extent (``xmin``,
+``xmax``, ``ymin``, ``ymax`` format) into a layer which can be used
+for other algorithms which require a layer based input.
+.. seealso:: :ref:`qgispointtolayer`
+
+Tool: Create layer from point
+Algorithm ID: native:pointtolayer
+Description: Creates a new vector layer that contains a single feature with
+geometry matching a point parameter.
+It can be used in models to convert a point into a point layer for
+algorithms which require a layer based input.
+.. seealso:: :ref:`qgisextenttolayer`
+
+Tool: Create wedge buffers
+Algorithm ID: native:wedgebuffers
+Description: Creates wedge shaped buffers from input points.
+   Wedge buffers
+The native output from this algorithm are CurvePolygon geometries,
+but these may be automatically segmentized to Polygons depending
+on the output format.
+   :ref:`qgistaperedbuffer`
+
+Tool: Delaunay triangulation
+Algorithm ID: native:delaunaytriangulation
+Description: Creates a polygon layer with the Delaunay triangulation corresponding
+to the input point layer.
+   Delaunay triangulation on points
+**Default menu**: :menuselection:`Vector --> Geometry Tools`
+
+Tool: Delete holes
+Algorithm ID: native:deleteholes
+Description: Takes a polygon layer and removes holes in polygons.
+It creates a new vector layer in which polygons with holes have been
+replaced by polygons with only their external ring.
+Attributes are not modified.
+An optional minimum area parameter allows removing only holes which
+are smaller than a specified area threshold. Leaving this parameter at
+``0.0`` results in all holes being removed.
+   Before and after the cleaning
+:ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
+
+Tool: Densify by count
+Algorithm ID: native:densifygeometries
+Description: Takes a polygon or line layer and generates a new one in which the
+geometries have a larger number of vertices than the original one.
+If the geometries have Z or M values present then these will be
+linearly interpolated at the added vertices.
+The number of new vertices to add to each segment is specified as an
+input parameter.
+   Red points show the vertices before and after the densify
+:ref:`features in-place modification <processing_inplace_edit>`
+of line and polygon features
+.. seealso:: :ref:`qgisdensifygeometriesgivenaninterval`
+
+Tool: Densify by interval
+Algorithm ID: native:densifygeometriesgivenaninterval
+Description: Takes a polygon or line layer and generates a new one in which the
+geometries have a larger number of vertices than the original one.
+The geometries are densified by adding regularly placed extra
+vertices inside each segment so that the maximum distance between
+any two vertices does not exceed the specified distance.
+If the geometries have Z or M values present then these will be
+linearly interpolated at the added vertices.
+**Example**
+Specifying a distance of 3 would cause the segment
+``[0 0] -> [10 0]`` to be converted to
+``[0 0] -> [2.5 0] -> [5 0] -> [7.5 0] -> [10 0]``,
+since 3 extra vertices are required on the segment and spacing these
+at 2.5 increments allows them to be evenly spaced over the segment.
+   Densify geometry at a given interval
+:ref:`features in-place modification <processing_inplace_edit>`
+of line and polygon features
+.. seealso:: :ref:`qgisdensifygeometries`
+
+Tool: Dissolve
+Algorithm ID: native:dissolve
+Description: Takes a vector layer and combines its features into new features.
+One or more attributes can be specified to dissolve features
+belonging to the same class (having the same value for the specified
+attributes), alternatively all features can be dissolved to a single
+feature.
+All output geometries will be converted to multi geometries.
+In case the input is a polygon layer, common boundaries of adjacent
+polygons being dissolved will get erased.
+If enabled, the optional "Keep disjoint features separate" setting will
+cause features and parts that do not overlap or touch to be exported as 
+separate features (instead of parts of a single multipart feature).
+The resulting attribute table will have the same fields as the input
+layer.
+The values in the output layer's fields are the ones of the first
+input feature that happens to be processed.
+   Dissolving a layer into a single multipart feature
+.. seealso:: :ref:`qgisaggregate`, :ref:`qgiscollect`
+
+Tool: Drape (set Z value from raster)
+Algorithm ID: native:setzfromraster
+Description: Uses values sampled from a band within a raster layer to set the Z
+value for every overlapping vertex in the feature geometry.
+The raster values can optionally be scaled by a preset amount.
+If Z values already exist in the layer, they will be overwritten with
+the new value.
+If no Z values exist, the geometry will be upgraded to include the Z
+dimension.
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features with Z enabled
+.. seealso:: :ref:`qgissetmfromraster`, :ref:`qgissetzvalue`
+
+Tool: Z values
+Algorithm ID: native:dropmzvalues
+Description: Removes M (measure) or Z (altitude) values from input geometries.
+.. seealso:: :ref:`qgissetmvalue`, :ref:`qgissetzvalue`
+
+Tool: Eliminate selected polygons
+Algorithm ID: qgis:eliminateselectedpolygons
+Description: Combines selected polygons of the input layer with certain adjacent
+polygons by erasing their common boundary.
+The adjacent polygon can be either the one with the largest or
+smallest area or the one sharing the largest common boundary with the
+polygon to be eliminated.
+Eliminate is normally used to get rid of sliver polygons, i.e. tiny
+polygons that are a result of polygon intersection processes where
+boundaries of the inputs are similar but not identical.
+.. seealso:: :ref:`qgisfixgeometries`
+
+Tool: Explode lines
+Algorithm ID: native:explodelines
+Description: Takes a lines layer and creates a new one in which each line layer is
+replaced by a set of lines representing the segments in the original
+line.
+Each line in the resulting layer contains only a start and an end
+point, with no intermediate vertices between them.
+   The original line layer and the exploded one
+:ref:`features in-place modification <processing_inplace_edit>`
+of line features
+.. seealso:: :ref:`qgissubdivide`, :ref:`qgislinesubstring`
+
+Tool: Extend lines
+Algorithm ID: native:extendlines
+Description: Extends line geometry by a specified amount at the start and end of
+the line.
+Lines are extended using the bearing of the first and last segment in
+the line.
+   The red dashes represent the initial and final extension of the
+   original layer
+:ref:`features in-place modification <processing_inplace_edit>`
+of line features
+.. seealso:: :ref:`qgislinesubstring`
+
+Tool: Extract M values
+Algorithm ID: native:extractmvalues
+Description: Extracts M values from geometries into feature attributes.
+By default only the M value from the first vertex of each feature is
+extracted, however the algorithm can optionally calculate statistics
+on all of the geometry's M values, including sum, mean, minimum and
+maximum.
+.. seealso:: :ref:`qgisextractzvalues`, :ref:`qgissetmvalue`, :ref:`qgisdropmzvalues`
+
+Tool: Extract specific vertices
+Algorithm ID: native:extractspecificvertices
+Description: Takes a vector layer and generates a point layer with points
+representing specific vertices in the input geometries.
+For instance, this algorithm can be used to extract the first or last
+vertices in the geometry.
+The attributes associated to each point are the same ones associated
+to the feature that the vertex belongs to.
+The vertex indices parameter accepts a comma separated string
+specifying the indices of the vertices to extract.
+The first vertex corresponds to an index of 0, the second vertex has
+an index of 1, etc. Negative indices can be used to find vertices at
+the end of the geometry, e.g., an index of -1 corresponds to the last
+vertex, -2 corresponds to the second last vertex, etc.
+Additional fields are added to the vertices indicating the specific
+vertex position (e.g., 0, -1, etc), the original vertex index, the
+vertex’s part and its index within the part (as well as its ring for
+polygons), distance along the original geometry and bisector angle of
+vertex for the original geometry.
+:ref:`features in-place modification <processing_inplace_edit>`
+of point features
+   :ref:`qgisfilterverticesbyz`
+
+Tool: Extract vertices
+Algorithm ID: native:extractvertices
+Description: Takes a vector layer and generates a point layer with points
+representing the vertices in the input geometries.
+The attributes associated to each point are the same ones associated
+to the feature that the vertex belongs to.
+Additional fields are added to the vertices indicating the vertex
+index (beginning at 0), the feature’s part and its index within the
+part (as well as its ring for polygons), distance along original
+geometry and bisector angle of vertex for original geometry.
+   Vertices extracted for line and polygon layer
+:ref:`features in-place modification <processing_inplace_edit>`
+of point features
+   :ref:`qgisfilterverticesbym`, :ref:`qgisfilterverticesbyz`
+
+Tool: Extract Z values
+Algorithm ID: native:extractzvalues
+Description: Extracts Z values from geometries into feature attributes.
+By default only the Z value from the first vertex of each feature is
+extracted, however the algorithm can optionally calculate statistics
+on all of the geometry's Z values, including sum, mean, minimum and
+maximum.
+   :ref:`qgisdropmzvalues`
+
+Tool: Filter vertices by M value
+Algorithm ID: native:filterverticesbym
+Description: Filters away vertices based on their M value, returning geometries
+with only vertex points that have a M value greater than or equal to
+the specified minimum value and/or less than or equal to the maximum
+value.
+If the minimum value is not specified then only the maximum value is
+tested, and similarly if the maximum value is not specified then only
+the minimum value is tested.
+   The red line represents the black line with only vertices whose M
+   value is <=10.
+:ref:`features in-place modification <processing_inplace_edit>`
+of line and polygon features with M enabled
+.. note:: Depending on the input geometry attributes and the filters
+   used, the resultant geometries created by this algorithm may no
+   longer be valid.
+ :ref:`qgisextractspecificvertices`
+
+Tool: Filter vertices by Z value
+Algorithm ID: native:filterverticesbyz
+Description: Filters away vertices based on their Z value, returning geometries
+with only vertex points that have a Z value greater than or equal to
+the specified minimum value and/or less than or equal to the maximum
+value.
+If the minimum value is not specified then only the maximum value is
+tested, and similarly if the maximum value is not specified then only
+the minimum value is tested.
+   The red line represents the black line with only vertices whose Z
+   value is <=10.
+:ref:`features in-place modification <processing_inplace_edit>`
+of line and polygon features with Z enabled
+.. note:: Depending on the input geometry attributes and the filters
+   used, the resultant geometries created by this algorithm may no
+   longer be valid.
+   You may need to run the :ref:`qgisfixgeometries` algorithm to
+   ensure their validity.
+ :ref:`qgisextractspecificvertices`
+
+Tool: Fix geometries
+Algorithm ID: native:fixgeometries
+Description: Attempts to create a valid representation of a given invalid geometry
+without losing any of the input vertices.
+Already valid geometries are returned without further intervention.
+Always outputs multi-geometry layer.
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features without M enabled
+.. note:: M values will be dropped from the output.
+.. seealso:: :ref:`qgischeckvalidity`
+
+Tool: rule
+Algorithm ID: native:forcerhr
+Description: Forces polygon geometries to respect the Right-Hand-Rule, in which
+the area that is bounded by a polygon is to the right of the boundary.
+In particular, the exterior ring is oriented in a clockwise
+direction and any interior rings in a counter-clockwise direction.
+:ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
+
+Tool: Geodesic line split at antimeridian
+Algorithm ID: native:antimeridiansplit
+Description: Splits a line into multiple geodesic segments, whenever
+the line crosses the antimeridian (±180 degrees longitude).
+Splitting at the antimeridian helps the visual display of the lines in
+some projections.
+The returned geometry will always be a multi-part geometry.
+Whenever line segments in the input geometry cross the antimeridian,
+they will be split into two segments, with the latitude of the
+breakpoint being determined using a geodesic line connecting the
+points either side of this segment.
+The current project ellipsoid setting will be used when calculating
+this breakpoint.
+If the input geometry contains M or Z values, these will be linearly
+interpolated for the new vertices created at the antimeridian.
+:ref:`features in-place modification <processing_inplace_edit>`
+of line features
+
+Tool: Geometry by expression
+Algorithm ID: native:geometrybyexpression
+Description: Updates existing geometries (or creates new geometries) for input
+features by use of a QGIS expression.
+This allows complex geometry modifications which can utilize all the
+flexibility of the QGIS expression engine to manipulate and create
+geometries for output features.
+For help with QGIS expression functions, see the inbuilt help available
+in the :ref:`expression builder <vector_expressions>`.
+
+Tool: Interpolate point on line
+Algorithm ID: native:interpolatepoint
+Description: Creates a point geometry interpolated at a set distance along line or
+curve geometries.
+Z and M values are linearly interpolated from existing values.
+If a multipart geometry is encountered, only the first part is
+considered when calculating the substring.
+If the specified distance is greater than the input feature's length,
+the resultant feature will have a null geometry.
+   Interpolated point at 500m of the beginning of the line
+.. seealso:: :ref:`qgispointsalonglines`
+
+Tool: Keep N biggest parts
+Algorithm ID: qgis:keepnbiggestparts
+Description: Takes a layer with polygons or multipolygons and returns a new layer
+in which only the *n* largest polygons of each multipolygon feature
+are kept.
+If a feature has *n* or fewer parts, the feature will just be copied.
+   Clockwise from top left: original multipart feature, one, two and
+   three biggest parts kept
+
+Tool: Line substring
+Algorithm ID: native:linesubstring
+Description: Returns the portion of a line (or curve) which falls between the
+specified start and end distances (measured from the beginning of the
+line).
+Z and M values are linearly interpolated from existing values.
+If a multipart geometry is encountered, only the first part is
+considered when calculating the substring.
+   Substring line with starting distance set at 0 meters and the
+   ending distance at 250 meters.
+of line features
+.. seealso:: :ref:`qgisextendlines`
+
+Tool: Lines to polygons
+Algorithm ID: qgis:linestopolygons
+Description: Generates a polygon layer using as polygon rings the lines from an
+input line layer.
+The attribute table of the output layer is the same as the one of
+the input layer.
+.. seealso:: :ref:`qgispolygonstolines`, :ref:`qgispolygonize`, :ref:`qgisconvertgeometrytype`
+
+Tool: Merge lines
+Algorithm ID: native:mergelines
+Description: Joins all connected parts of MultiLineString geometries into single
+LineString geometries.
+If any parts of the input MultiLineString geometries are not
+connected, the resultant geometry will be a MultiLineString containing
+any lines which could be merged and any non-connected line parts.
+:ref:`features in-place modification <processing_inplace_edit>`
+of line features
+
+Tool: Minimum bounding geometry
+Algorithm ID: qgis:minimumboundinggeometry
+Description: Creates geometries which enclose the features from an input layer.
+The features can be grouped by a field.
+The output layer will then contain one feature per group value with
+a geometry (MBB) that covers the geometries of the features with
+matching value.
+The following enclosing geometry types are supported:
+* bounding box (envelope)
+* oriented rectangle
+* circle
+* convex hull
+    Clockwise from top left: envelope, oriented rectangle,
+    circle, convex hull
+.. seealso:: :ref:`qgisminimumenclosingcircle`
+
+Tool: Minimum enclosing circles
+Algorithm ID: native:minimumenclosingcircle
+Description: Calculates the minimum enclosing circles of the features in the input
+layer.
+   Enclosing circles for each feature
+:ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
+.. seealso:: :ref:`qgisminimumboundinggeometry`
+
+Tool: ring buffer (constant distance)
+Algorithm ID: native:multiringconstantbuffer
+Description: Computes multi-ring (*donut*) buffer for the features of the
+input layer, using a fixed or dynamic distance and number of rings.
+   Multi-ring buffer for a line, point and polygon layer
+:ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
+   :ref:`qgisvariabledistancebuffer`,
+   :ref:`qgisrectanglesovalsdiamonds`,
+   :ref:`qgissinglesidedbuffer`
+
+Tool: Multipart to singleparts
+Algorithm ID: native:multiparttosingleparts
+Description: Splits multipart features in the input layer into singlepart
+features.
+The attributes of the output layer are the same as the original ones
+but divided into single features.
+   Left the multipart source layer and right the single part output
+   result
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
+.. seealso:: :ref:`qgiscollect`, :ref:`qgispromotetomulti`
+
+Tool: Offset lines
+Algorithm ID: native:offsetline
+Description: Offsets lines by a specified distance.
+Positive distances will offset lines to the left, and negative
+distances will offset them to the right.
+   In blue the source layer, in red the offset one
+:ref:`features in-place modification <processing_inplace_edit>`
+of line features
+.. seealso:: :ref:`qgisarrayoffsetlines`, :ref:`qgistranslategeometry`
+
+Tool: Oriented minimum bounding box
+Algorithm ID: native:orientedminimumboundingbox
+Description: Calculates the minimum area rotated rectangle for each feature in the
+input layer.
+   Oriented minimum bounding box
+:ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
+.. seealso:: :ref:`qgisminimumboundinggeometry`
+
+Tool: Orthogonalize
+Algorithm ID: native:orthogonalize
+Description: Attempts to orthogonalize the geometries of the input line or polygon
+layer.
+This process shifts the vertices in the geometries to try to make
+every angle in the geometry either a right angle or a straight line.
+   In blue the source layer and in the red orthogonalized
+   result
+:ref:`features in-place modification <processing_inplace_edit>`
+of line and polygon features
+
+Tool: Point on Surface
+Algorithm ID: native:pointonsurface
+Description: For each feature of the input layer, returns a point that is
+guaranteed to lie on the surface of the feature geometry.
+:ref:`features in-place modification <processing_inplace_edit>`
+of point features
+.. seealso:: :ref:`qgiscentroids`
+
+Tool: Points along geometry
+Algorithm ID: native:pointsalonglines
+Description: Creates points at regular intervals along line or polygon geometries.
+Created points will have new attributes added for the distance along
+the geometry and the angle of the line at the point.
+An optional start and end offset can be specified, which controls how
+far from the start and end of the geometry the points should be
+created.
+   Points created along the source line layer
+.. seealso:: :ref:`qgisinterpolatepoint`
+
+Tool: Points displacement
+Algorithm ID: qgis:pointsdisplacement
+Description: Given a distance of proximity, identifies nearby point features and
+radially distributes them over a circle whose center represents their
+barycenter.
+A convenient tool to scatter overlaid features.
+
+Tool: Pole of inaccessibility
+Algorithm ID: native:poleofinaccessibility
+Description: Calculates the pole of inaccessibility for a polygon layer, which is
+the most distant internal point from the boundary of the surface.
+This algorithm uses the 'polylabel' algorithm (Vladimir Agafonkin,
+2016), which is an iterative approach guaranteed to find the true pole
+of inaccessibility within a specified tolerance.
+A more precise tolerance (lower value) requires more iterations and
+will take longer to calculate.
+The distance from the calculated pole to the polygon boundary will be
+stored as a new attribute in the output layer.
+   Pole of inaccessibility
+
+Tool: Polygonize
+Algorithm ID: native:polygonize
+Description: Creates a polygon layer whose features boundaries are generated from a
+line layer of **closed** features.
+   The yellow polygons generated from the closed lines
+.. note:: The line layer must have closed shapes in order to be
+   transformed into a polygon.
+.. seealso:: :ref:`qgispolygonstolines`, :ref:`qgislinestopolygons`, :ref:`qgisconvertgeometrytype`
+
+Tool: Polygons to lines
+Algorithm ID: native:polygonstolines
+Description: Takes a polygon layer and creates a line layer, with lines
+representing the boundaries of the polygons in the input layer.
+The attribute table of the output layer is the same as the one of
+the input layer.
+   Black lines as the result of the algorithm
+.. seealso:: :ref:`qgislinestopolygons`, :ref:`qgispolygonize`, :ref:`qgisconvertgeometrytype`
+
+Tool: Project points (Cartesian)
+Algorithm ID: native:projectpointcartesian
+Description: Projects point geometries by a specified distance and bearing (azimuth).
+:ref:`features in-place modification <processing_inplace_edit>`
+of point features
+
+Tool: Promote to multipart
+Algorithm ID: native:promotetomulti
+Description: Takes a vector layer with singlepart geometries and generates a new
+one in which all geometries are multipart.
+Input features which are already multipart features will remain
+unchanged.
+This algorithm can be used to force geometries to multipart types in
+order to be compatible with data providers that require multipart
+features.
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
+.. seealso:: :ref:`qgisaggregate`, :ref:`qgiscollect`
+
+Tool: diamonds
+Algorithm ID: native:rectanglesovalsdiamonds
+Description: Creates a buffer area with a rectangle, oval or diamond shape
+for each feature of the input point layer.
+The shape parameters can be fixed for all features or dynamic using a field or
+an expression.
+   Different buffer shapes with dynamic parameters
+
+Tool: Remove duplicate vertices
+Algorithm ID: native:removeduplicatevertices
+Description: Removes duplicate vertices from features, wherever removing the
+vertices does not result in a degenerate geometry.
+The tolerance parameter specifies the tolerance for coordinates when
+determining whether vertices are identical.
+By default, Z values are not considered when detecting duplicate
+vertices.
+E.g. two vertices with the same X and Y coordinate but different Z
+values will still be considered duplicate and one will be removed.
+If the :guilabel:`Use Z Value` parameter is true, then the Z values
+are also tested and vertices with the same X and Y but different Z
+will be maintained.
+of point, line, and polygon features
+.. note:: Duplicate vertices are not tested between different parts
+   of a multipart geometry, e.g. a multipoint geometry with
+   overlapping points will not be changed by this method.
+   :ref:`qgisextractspecificvertices`,
+   :ref:`qgisdeleteduplicategeometries`
+
+Tool: Remove null geometries
+Algorithm ID: native:removenullgeometries
+Description: Removes any features which do not have a geometry from a vector layer.
+All other features will be copied unchanged.
+The features with null geometries can be saved to a separate layer.
+If :guilabel:`Also remove empty geometries` is checked, the algorithm
+removes features whose geometries have no coordinates, i.e., geometries
+that are empty.
+In that case, also the null output will reflect this option, containing
+both null and empty geometries.
+.. seealso:: :ref:`qgisdeleteduplicategeometries`
+
+Tool: Reverse line direction
+Algorithm ID: native:reverselinedirection
+Description: Inverts the direction of a line layer.
+   Before and after the direction inversion
+of line features
+
+Tool: Rotate
+Algorithm ID: native:rotatefeatures
+Description: Rotates feature geometries by the specified angle clockwise.
+The rotation occurs around each feature's centroid, or optionally
+around a unique preset point.
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
+.. seealso:: :ref:`qgistranslategeometry`, :ref:`qgisswapxy`
+
+Tool: Roundness
+Algorithm ID: native:roundness
+Description: Calculates the roundness of each feature and stores it as a new field. The input vector layer must contain polygons.
+The roundness of a polygon is defined as 4π × polygon area / perimeter².
+The roundness value varies between 0 and 1. A perfect circle has a roundness of 1,
+while a completely flat polygon has a roundness of 0.
+.. note:: The algorithm returns NULL for multipart polygon features.
+:ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
+
+Tool: Segmentize by maximum angle
+Algorithm ID: native:segmentizebymaxangle
+Description: Segmentizes a geometry by converting curved sections to linear
+sections.
+The segmentization is performed by specifying the maximum allowed
+radius angle between vertices on the straightened geometry (e.g the
+angle of the arc created from the original arc center to consecutive
+output vertices on the linearized geometry).
+Non-curved geometries will be retained without change.
+   :ref:`qgissimplifygeometries`, :ref:`qgissmoothgeometry`
+
+Tool: Segmentize by maximum distance
+Algorithm ID: native:segmentizebymaxdistance
+Description: Segmentizes a geometry by converting curved sections to linear
+sections.
+The segmentization is performed by specifying the maximum allowed
+offset distance between the original curve and the segmentized
+representation.
+Non-curved geometries will be retained without change.
+   :ref:`qgissimplifygeometries`, :ref:`qgissmoothgeometry`
+
+Tool: Set M value
+Algorithm ID: native:setmvalue
+Description: Sets the M value for geometries in a layer.
+If M values already exist in the layer, they will be overwritten
+with the new value.
+If no M values exist, the geometry will be upgraded to include M
+values and the specified value used as the initial M value for all
+geometries.
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features with M enabled
+.. tip:: Use the |identify|:sup:`Identify Features` button to check
+   the added M value: the results are available in the
+   :guilabel:`Identify Results` dialog.
+   :ref:`qgisdropmzvalues`
+
+Tool: Set M value from raster
+Algorithm ID: native:setmfromraster
+Description: Uses values sampled from a band within a raster layer to set the M
+value for every overlapping vertex in the feature geometry.
+The raster values can optionally be scaled by a preset amount.
+If M values already exist in the layer, they will be overwritten with
+the new value.
+If no M values exist, the geometry will be upgraded to include M
+values.
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features with M enabled
+.. seealso:: :ref:`qgissetzfromraster`, :ref:`qgissetmvalue`
+
+Tool: Set Z value
+Algorithm ID: native:setzvalue
+Description: Sets the Z value for geometries in a layer.
+If Z values already exist in the layer, they will be overwritten
+with the new value.
+If no Z values exist, the geometry will be upgraded to include Z
+values and the specified value used as the initial Z value for all
+geometries.
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features with Z enabled
+.. tip:: Use the |identify|:sup:`Identify Features` button to check
+ the added Z value: the results are available in the
+ :guilabel:`Identify Results` dialog.
+   :ref:`qgisdropmzvalues`
+
+Tool: Simplify
+Algorithm ID: native:simplifygeometries
+Description: Simplifies the geometries in a line or polygon layer.
+It creates a new layer with the same features as the ones in the input
+layer, but with geometries containing a lower number of vertices.
+The algorithm gives a choice of simplification methods, including
+distance based (the "Douglas-Peucker" algorithm), area based
+("Visvalingam" algorithm) and snapping geometries to grid.
+   From left to right, source layer and increasing simplification tolerances
+of line and polygon features
+ :ref:`qgisdensifygeometriesgivenaninterval`
+
+Tool: Single sided buffer
+Algorithm ID: native:singlesidedbuffer
+Description: Computes a buffer on lines by a specified distance on one side of
+the line only.
+Buffer always results in a polygon layer.
+   Left versus right side buffer on the same vector line layer
+.. seealso:: :ref:`qgisbuffer`
+
+Tool: Smooth
+Algorithm ID: native:smoothgeometry
+Description: Smooths the geometries in a line or polygon layer by
+adding more **vertices and corners** to the feature geometries.
+The iterations parameter dictates how many smoothing iterations will
+be applied to each geometry.
+A higher number of iterations results in smoother geometries with the
+cost of greater number of nodes in the geometries.
+    Increasing number of iterations causes smoother geometries
+The offset parameter controls how "tightly" the smoothed geometries
+follow the original geometries. Smaller values results in a tighter
+fit, and larger values will create a looser fit.
+    Blue: the input layer. Offset 0.25 gives the red line, while
+    offset 0.50 gives the green line.
+The maximum angle parameter can be used to prevent smoothing of nodes
+with large angles.
+Any node where the angle of the segments to either side is larger than
+this will not be smoothed. For example, setting the maximum angle to
+90 degrees or lower would preserve right angles in the geometry.
+:ref:`features in-place modification <processing_inplace_edit>`
+of line and polygon features
+   :ref:`qgisdensifygeometries`,
+   :ref:`qgisdensifygeometriesgivenaninterval`
+
+Tool: Snap geometries to layer
+Algorithm ID: native:snapgeometries
+Description: Snaps the geometries in a layer either to the geometries from
+another layer, or to geometries within the same layer.
+Matching is done based on a tolerance distance, and vertices will be
+inserted or removed as required to make the geometries match the
+reference geometries.
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
+.. seealso:: :ref:`qgissnappointstogrid`
+
+Tool: Snap points to grid
+Algorithm ID: native:snappointstogrid
+Description: Modifies the coordinates of geometries in a vector layer, so that all
+points or vertices are snapped to the closest point of a grid.
+If the snapped geometry cannot be calculated (or is totally collapsed)
+the feature's geometry will be cleared.
+Snapping can be performed on the X, Y, Z or M axis. A grid spacing of
+0 for any axis will disable snapping for that axis.
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
+.. note:: Snapping to grid may generate an invalid geometry in some
+   corner cases.
+.. seealso:: :ref:`qgissnapgeometries`
+
+Tool: Split lines by maximum length
+Algorithm ID: native:splitlinesbylength
+Description: Takes a line (or curve) layer and splits each feature into
+multiple parts, where each part is of a specified maximum length.
+Z and M values at the start and end of the new line substrings are
+linearly interpolated from existing values.
+:ref:`features in-place modification <processing_inplace_edit>`
+of line features
+
+Tool: Subdivide
+Algorithm ID: native:subdivide
+Description: Subdivides the geometry. The returned geometry will be a collection
+containing subdivided parts from the original geometry, where no part
+has more than the specified maximum number of nodes.
+This is useful for dividing a complex geometry into less complex
+parts, easier to spatially index and faster to perform spatial
+operations.
+Curved geometries will be segmentized before subdivision.
+   Left the input layer, middle maximum nodes value is 100 and right
+   maximum value is 200
+:ref:`features in-place modification <processing_inplace_edit>` 
+of point, line, and polygon features
+.. note:: Subdividing a geometry can generate geometry parts that may
+   not be valid and may contain self-intersections.
+.. seealso:: :ref:`qgisexplodelines`, :ref:`qgislinesubstring`
+
+Tool: Swap X and Y coordinates
+Algorithm ID: native:swapxy
+Description: Switches the X and Y coordinate values in input geometries.
+It can be used to repair geometries which have accidentally had their
+latitude and longitude values reversed.
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
+.. seealso:: :ref:`qgistranslategeometry`, :ref:`qgisrotatefeatures`
+
+Tool: Tapered buffers
+Algorithm ID: native:taperedbuffer
+Description: Creates tapered buffer along line geometries, using a specified start
+and end buffer diameter.
+   Tapered buffer example
+   :ref:`qgiswedgebuffers`
+
+Tool: Tessellate
+Algorithm ID: 3d:tessellate
+Description: Tessellates a polygon geometry layer, dividing the geometries into
+triangular components.
+The output layer consists of multipolygon geometries for each input
+feature, with each multipolygon consisting of multiple triangle
+component polygons.
+   Tessellated polygon (right)
+:ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
+
+Tool: Transect
+Algorithm ID: native:transect
+Description: Creates transects on vertices for (multi)linestring.
+A transect is a line oriented from an angle (by default perpendicular)
+to the input polylines (at vertices).
+Field(s) from feature(s) are returned in the transect with these
+new fields:
+* TR_FID: ID of the original feature
+* TR_ID: ID of the transect. Each transect have an unique ID
+* TR_SEGMENT: ID of the segment of the linestring
+* TR_ANGLE: Angle in degrees from the original line at the vertex
+* TR_LENGTH: Total length of the transect returned
+* TR_ORIENT: Side of the transect (only on the left or right of
+  the line, or both side)
+   Dashed red lines represent the transect of the input line layer
+
+Tool: Translate
+Algorithm ID: native:translategeometry
+Description: Moves the geometries within a layer, by offsetting with a predefined
+X and Y displacement.
+Z and M values present in the geometry can also be translated.
+   Dashed lines represent the translated geometry of the input layer
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
+   :ref:`qgisoffsetline`, :ref:`qgisrotatefeatures`, :ref:`qgisswapxy`
+
+Tool: Variable width buffer (by M value)
+Algorithm ID: native:bufferbym
+Description: Creates variable width buffers along lines, using the M value of the
+line geometries as the diameter of the buffer at each vertex.
+   Variable buffer example
+   :ref:`qgissetmvalue`, :ref:`qgisvariabledistancebuffer`
+
+Tool: Voronoi polygons
+Algorithm ID: native:voronoipolygons
+Description: Takes a point layer and generates a polygon layer containing
+the Voronoi polygons (known also as Thiessen polygons) corresponding
+to those input points.
+Any location within a Voronoi polygon is closer to the associated
+point than to any other point.
+   Voronoi polygons
+**Default menu**: :menuselection:`Vector --> Geometry Tools`
+
+Tool: Clip
+Algorithm ID: qgis:clip
+Description: Clips a vector layer using the features of an additional polygon
+layer.
+Only the parts of the features in the input layer that fall within the
+polygons of the overlay layer will be added to the resulting layer.
+.. include:: ../algs_include.rst
+   :start-after: **warning_attributes**
+   :end-before: **end_warning_attributes**
+This algorithm uses spatial indexes on the providers, prepared
+geometries and apply a clipping operation if the geometry isn't wholly
+contained by the mask geometry.
+  Clipping operation between a two-feature input layer 'a' and a single
+  feature overlay layer 'b' (left) - resulting in a new layer with the modified 
+  'a' features (right)
+of point, line, and polygon features
+.. seealso:: :ref:`qgisintersection`, :ref:`qgisdifference`
+
+Tool: Difference
+Algorithm ID: qgis:difference
+Description: Extracts features from the input layer that don't fall within the
+boundaries of the overlay layer.
+Input layer features that partially overlap the overlay layer
+feature(s) are split along the boundary of those feature(s) and only
+the portions outside the overlay layer features are retained.
+.. include:: ../algs_include.rst
+   :start-after: **warning_attributes**
+   :end-before: **end_warning_attributes**
+  Difference operation between a two-features input layer 'a' and a single
+  feature overlay layer 'b' (left) - resulting in a new layer with the modified 
+  'a' features (right)
+of point, line, and polygon features
+.. seealso:: :ref:`qgismultidifference`, :ref:`qgissymmetricaldifference`, :ref:`qgisclip`
+
+Tool: Difference (multiple)
+Algorithm ID: qgis:multidifference
+Description: Extracts features from the input layer that fall completely outside or
+only partially overlap the features from any of the overlay layer(s).
+For each overlay layer the difference is calculated between the result of
+all previous difference operations and this overlay layer.
+Input layer features that partially overlap feature(s) in the overlay layer
+are split along those features' boundary and only the portions outside the
+overlay layer features are retained.
+.. include:: ../algs_include.rst
+   :start-after: **warning_attributes**
+   :end-before: **end_warning_attributes**
+  Difference operation between a two-feature input layer 'a' and single
+  feature overlay layers 'b' and 'c' (left) - resulting in a new layer with the modified 
+  'a' features (right)
+.. seealso:: :ref:`qgisdifference`, :ref:`qgissymmetricaldifference`, :ref:`qgisclip`
+
+Tool: clip by extent
+Algorithm ID: qgis:extractbyextent
+Description: Creates a new vector layer that only contains features which fall
+within a specified extent.
+Any features which intersect the extent will be included.
+  Extract operation between a three-feature input layer 'a' and a dashed extent (left) - 
+  resulting features with dashed extent for reference (right)
+.. seealso:: :ref:`qgisclip`
+
+Tool: Intersection
+Algorithm ID: qgis:intersection
+Description: Extracts the portions of features from the input layer that overlap
+features in the overlay layer.
+Features in the intersection layer are assigned the attributes of the
+overlapping features from both the input and overlay layers.
+.. include:: ../algs_include.rst
+   :start-after: **warning_attributes**
+   :end-before: **end_warning_attributes**
+  Intersection operation between a two-feature input layer 'a' and a single
+  feature overlay layer 'b' (left) - overlapping areas become a new two-feature layer 
+  with both layers' attributes (right)
+.. seealso:: :ref:`qgismultiintersection`, :ref:`qgisclip`, :ref:`qgisdifference`
+
+Tool: Intersection (multiple)
+Algorithm ID: qgis:multiintersection
+Description: Extracts the overlapping portions of features in the input and all overlay layers.
+Features in the output layer are assigned the attributes of the overlapping
+features from both the input and overlay layers.
+.. include:: ../algs_include.rst
+   :start-after: **warning_attributes**
+   :end-before: **end_warning_attributes**
+  Intersection operation between a two-feature input layer 'a' and single
+  feature overlay layers 'b' and 'c' (left) - overlapping areas become a new two-feature layer 
+  with all layers' attributes (right)
+.. seealso:: :ref:`qgisintersection`, :ref:`qgisclip`, :ref:`qgisdifference`
+
+Tool: Line intersections
+Algorithm ID: qgis:lineintersections
+Description: Creates point features where the lines from the two layers intersect.
+  Points of intersection
+**Default menu**: :menuselection:`Vector --> Analysis Tools`
+
+Tool: Split with lines
+Algorithm ID: qgis:splitwithlines
+Description: Splits the lines or polygons in one layer using the lines or polygon rings
+in another layer to define the breaking points.
+Intersection between geometries in both layers are considered as split
+points.
+Output will contain multi geometries for split features.
+  Split lines
+of line and polygon features
+
+Tool: Symmetrical difference
+Algorithm ID: qgis:symmetricaldifference
+Description: Creates a layer containing features from both the input and overlay
+layers but with the overlapping areas between the two layers removed.
+The attribute table of the symmetrical difference layer contains
+attributes and fields from both the input and overlay layers.
+.. include:: ../algs_include.rst
+   :start-after: **warning_attributes**
+   :end-before: **end_warning_attributes**
+  Symmetrical difference operation between a two-features input layer
+  'a' and a single feature overlay layer 'b' (left) - 
+  resulting three-feature layer with both layers' attributes (right)
+   :ref:`qgisintersection`
+
+Tool: Union
+Algorithm ID: qgis:union
+Description: Checks overlaps between features within the input layer and creates
+separate features for overlapping and non-overlapping parts.
+The area of overlap will create as many identical overlapping features
+as there are features that participate in that overlap.
+  Union operation with a single input layer with two overlapping
+  features (left) - resulting in four features (middle) - features moved for clarity (right)
+An overlay layer can also be used, in which case features from each
+layer are split at their overlap with features from the other one,
+creating a layer containing all the portions from both input and
+overlay layers. Features on the same layer will not split each other.
+The attribute table of the union layer is filled with attribute values
+from the respective original layer for non-overlapping features, and
+attribute values from both layers for overlapping features.
+  Union operation between a two-feature input layer 'a' and a single
+  feature overlay layer 'b' (left) - resulting five-feature layer 
+  with attributes from both layers (right)
+.. note::
+   With an overlay layer, features on the same layer will not split each other.
+   If you want to split overlaps on the same layer as well as other layers,
+   first run the algorithm with multiple layers then run the algorithm
+   again with only the previous output.
+   :ref:`qgisintersection`
+
+Tool: Union (multiple)
+Algorithm ID: qgis:multiunion
+Description: Checks overlaps between features within the input layer and creates
+separate features for overlapping and non-overlapping parts.
+The area of overlap will create as many identical overlapping features
+as there are features that participate in that overlap.
+  Union operation with a single input layer with two overlapping
+  features (left) - resulting in four features (middle) - features moved for clarity (right)
+Multiple overlay layers can also be used, in which case features from each
+layer are split at their overlap with features from all other layers,
+creating a layer containing all the portions from both input and
+overlay layers. Features on the same layer will not split each other.
+The attribute table of the Union layer is filled with attribute values
+from the respective original layer for non-overlapping features, and
+attribute values from overlay layers for overlapping features.
+  Union operation between a two-feature input layer 'a' and single
+  feature overlay layers 'b' and 'c' (left) - resulting eleven-feature layer 
+  with attributes from all layers (right)
+.. note::
+   With an overlay layer, features on the same layer will not split each other.
+   If you want to split overlaps on the same layer as well as other layers,
+   first run the algorithm with multiple layers then run the algorithm
+   again with only the previous output.
+   :ref:`qgisintersection`
+
+Tool: Extract by attribute
+Algorithm ID: qgis:extractbyattribute
+Description: Creates two vector layers from an input layer: one will contain only
+matching features while the second will contain all the non-matching
+features.
+The criteria for adding features to the resulting layer is based on
+the values of an attribute from the input layer.
+.. seealso:: :ref:`qgisselectbyattribute`
+
+Tool: Extract by expression
+Algorithm ID: qgis:extractbyexpression
+Description: Creates two vector layers from an input layer: one will contain only
+matching features while the second will contain all the non-matching
+features.
+The criteria for adding features to the resulting layer is based on a
+QGIS expression.
+For more information about expressions see the
+:ref:`vector_expressions`.
+.. seealso:: :ref:`qgisselectbyexpression`
+
+Tool: Extract by location
+Algorithm ID: qgis:extractbylocation
+Description: Creates a new vector layer that only contains matching features from
+an input layer.
+The criteria for adding features to the resulting layer is based on
+the spatial relationship between each feature and the features in an
+additional layer.
+Exploring spatial relations
+...........................
+.. include:: ../algs_include.rst
+   :start-after: **geometric_predicates**
+   :end-before: **end_geometric_predicates**
+
+Tool: Extract within distance
+Algorithm ID: native:extractwithindistance
+Description: Creates a new vector layer that only contains matching features from an
+input layer. Features are copied wherever they are within
+the specified maximum distance from the features in an additional reference layer.
+.. seealso:: :ref:`qgisselectwithindistance`, :ref:`qgisextractbylocation`
+
+Tool: Filter by geometry type
+Algorithm ID: native:filterbygeometry
+Description: Filters features by their geometry type. Incoming features will be directed
+to different outputs based on whether they have a point, line or polygon geometry.
+
+Tool: Random extract
+Algorithm ID: qgis:randomextract
+Description: Takes a vector layer and generates a new one that contains only a
+subset of the features in the input layer.
+The subset is defined randomly, based on feature IDs, using a
+percentage or count value to define the total number of features in
+the subset.
+.. seealso:: :ref:`qgisrandomselection`
+
+Tool: Random extract within subsets
+Algorithm ID: qgis:randomextractwithinsubsets
+Description: Takes a vector layer and generates a new one that contains only a
+subset of the features in the input layer.
+The subset is defined randomly, based on feature IDs, using a
+percentage or count value to define the total number of features in
+the subset.
+The percentage/count value is not applied to the whole layer, but
+instead to each category.
+Categories are defined according to a given attribute.
+.. seealso:: :ref:`qgisrandomselectionwithinsubsets`
+
+Tool: Random selection
+Algorithm ID: qgis:randomselection
+Description: Takes a vector layer and selects a subset of its features.
+No new layer is generated by this algorithm.
+The subset is defined randomly, based on feature IDs, using a
+percentage or count value to define the total number of features in
+the subset.
+.. seealso:: :ref:`qgisrandomextract`
+
+Tool: Random selection within subsets
+Algorithm ID: qgis:randomselectionwithinsubsets
+Description: Takes a vector layer and selects a subset of its features.
+No new layer is generated by this algorithm.
+The subset is defined randomly, based on feature IDs, using a
+percentage or count value to define the total number of features in
+the subset.
+The percentage/count value is not applied to the whole layer, but
+instead to each category.
+Categories are defined according to a given attribute, which is also
+specified as an input parameter for the algorithm.
+No new outputs are created.
+.. seealso:: :ref:`qgisrandomextractwithinsubsets`
+
+Tool: Select by attribute
+Algorithm ID: qgis:selectbyattribute
+Description: Creates a selection in a vector layer.
+The criteria for selecting features is based on the values of an
+attribute from the input layer.
+.. seealso:: :ref:`qgisextractbyattribute`
+
+Tool: Select by expression
+Algorithm ID: qgis:selectbyexpression
+Description: Creates a selection in a vector layer.
+The criteria for selecting features is based on a QGIS expression.
+For more information about expressions see the
+:ref:`vector_expressions`.
+.. seealso:: :ref:`qgisextractbyexpression`
+
+Tool: Select by location
+Algorithm ID: qgis:selectbylocation
+Description: Creates a selection in a vector layer.
+The criteria for selecting features is based on the spatial
+relationship between each feature and the features in an additional
+layer.
+Exploring spatial relations
+...........................
+.. include:: ../algs_include.rst
+   :start-after: **geometric_predicates**
+   :end-before: **end_geometric_predicates**
+
+Tool: Select within distance
+Algorithm ID: native:selectwithindistance
+Description: creates a selection in a vector layer.
+Features are selected wherever they are within the specified maximum
+distance from the features in an additional reference layer.
+.. seealso:: :ref:`qgisextractwithindistance`, :ref:`qgisselectbylocation`
+
+Tool: Add autoincremental field
+Algorithm ID: native:addautoincrementalfield
+Description: Adds a new integer field to a vector layer, with a sequential value
+for each feature.
+This field can be used as a unique ID for features in the layer.
+The new attribute is not added to the input layer but a new layer is
+generated instead.
+The initial starting value for the incremental series can be
+specified.
+Optionally, the incremental series can be based on grouping fields and
+a sort order for features can also be specified.
+
+Tool: Add field to attributes table
+Algorithm ID: native:addfieldtoattributestable
+Description: Adds a new field to a vector layer.
+The name and characteristics of the attribute are defined as parameters.
+The new attribute is not added to the input layer but a new layer is generated instead.
+
+Tool: Add unique value index field
+Algorithm ID: native:adduniquevalueindexfield
+Description: Takes a vector layer and an attribute and adds a new numeric field.
+Values in this field correspond to values in the specified attribute,
+so features with the same value for the attribute will have the same
+value in the new numeric field.
+This creates a numeric equivalent of the specified attribute, which
+defines the same classes.
+The new attribute is not added to the input layer but a new layer is
+generated instead.
+
+Tool: Y fields to layer
+Algorithm ID: native:addxyfieldstolayer
+Description: Adds X and Y (or latitude/longitude) fields to a point layer.
+The X/Y fields can be calculated in a different CRS to the layer
+(e.g. creating latitude/longitude fields for a layer in a projected
+CRS).
+:ref:`features in-place modification <processing_inplace_edit>` 
+of point features
+
+Tool: Advanced Python field calculator
+Algorithm ID: qgis:advancedpythonfieldcalculator
+Description: Adds a new attribute to a vector layer, with values resulting from
+applying an expression to each feature.
+The expression is defined as a Python function.
+
+Tool: Drop field(s)
+Algorithm ID: native:deletecolumn
+Description: Takes a vector layer and generates a new one that has the same
+features but without the selected columns.
+.. seealso:: :ref:`qgisretainfields`
+
+Tool: Explode HStore Field
+Algorithm ID: native:explodehstorefield
+Description: Creates a copy of the input layer and adds a new field
+for every unique key in the HStore field.
+The expected field list is an optional comma separated
+list.
+If this list is specified, only these fields are added
+and the HStore field is updated.
+By default, all unique keys are added.
+The PostgreSQL `HStore <https://www.postgresql.org/docs/10/hstore.html>`_
+is a simple key-value store used in PostgreSQL and GDAL (when reading
+an `OSM file <https://gdal.org/drivers/vector/osm.html#other-tags-field>`_
+with the ``other_tags`` field.
+
+Tool: Extract binary field
+Algorithm ID: native:extractbinary
+Description: Extracts contents from a binary field, saving them to individual
+files.
+Filenames can be generated using values taken from an attribute in the
+source table or based on a more complex expression.
+
+Tool: Field calculator
+Algorithm ID: native:fieldcalculator
+Description: Opens the field calculator (see :ref:`vector_expressions`).
+You can use all the supported expressions and functions.
+A new layer is created with the result of the expression.
+The field calculator is very useful when used in
+:ref:`processing.modeler`.
+
+Tool: Refactor fields
+Algorithm ID: native:refactorfields
+Description: Allows editing the structure of the attribute table of a vector layer.
+Fields can be modified in their type and name, using a fields mapping.
+The original layer is not modified. A new layer is generated, which
+contains a modified attribute table, according to the provided fields
+mapping.
+.. note:: When using a template layer with :ref:`constraints <constraints>`
+  on fields, the information is displayed in the widget with a coloured
+  background and tooltip. Treat this information as a hint during configuration.
+  No constraints will be added on an output layer nor will they be checked
+  or enforced by the algorithm.
+The Refactor fields algorithm allows to:
+* Change field names and types
+* Add and remove fields
+* Reorder fields
+* Calculate new fields based on expressions
+* Load field list from another layer
+  Refactor fields dialog
+
+Tool: Rename field
+Algorithm ID: qgis:renametablefield
+Description: Renames an existing field from a vector layer.
+The original layer is not modified. A new layer is generated where
+the attribute table contains the renamed field.
+.. seealso:: :ref:`qgisrefactorfields`
+
+Tool: Retain fields
+Algorithm ID: native:retainfields
+Description: Takes a vector layer and generates a new one that retains only the selected fields.
+All other fields will be dropped.
+.. seealso:: :ref:`qgisdeletecolumn`
+
+Tool: Text to float
+Algorithm ID: qgis:texttofloat
+Description: Modifies the type of a given attribute in a vector layer, converting a
+text attribute containing numeric strings into a numeric attribute
+(e.g. '1' to ``1.0``).
+The algorithm creates a new vector layer so the source one is not
+modified.
+If the conversion is not possible the selected column will have
+``NULL`` values.
+
+Tool: Download vector tiles
+Algorithm ID: native:downloadvectortiles
+Description: Downloads vector tiles of an input vector tile layer and saves them in a local vector tile file.
+
+Tool: Write vector tiles (MBTiles)
+Algorithm ID: native:writevectortiles_mbtiles
+Description: Exports one or more vector layers to vector tiles, a data format
+optimized for fast map rendering and small data size.
+MBTiles is a specification for storing tiled map data in SQLite databases
+for immediate usage and for transfer. MBTiles files are known as tilesets.
+
+Tool: Write vector tiles (XYZ)
+Algorithm ID: native:writevectortiles_xyz
+Description: Exports one or more vector layers to vector tiles, a data format
+optimized for fast map rendering and small data size.

@@ -1,0 +1,4 @@
+source,logged_accuracy_percent,logged_mean_seconds,paper_accuracy_percent,paper_mean_seconds,paper_false_retrievals_unverified
+Embedding Model,96.97,9.98,96.98,9.98,110
+Tools Information,91.00,14.72,90.99,14.72,328
+Nothing Information,36.00,8.79,36.00,8.76,2331

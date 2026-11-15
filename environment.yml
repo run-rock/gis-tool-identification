@@ -1,0 +1,20 @@
+name: gis-tool-identification
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - accelerate
+      - faiss-cpu
+      - langchain-openai
+      - numpy
+      - openai
+      - pandas
+      - peft
+      - pydantic
+      - python-dotenv
+      - sentence-transformers
+      - torch
+      - tqdm
+      - transformers
