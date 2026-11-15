@@ -6,6 +6,8 @@ dependencies:
   - pip
   - pip:
       - accelerate
+      - bitsandbytes
+      - datasets
       - faiss-cpu
       - langchain-openai
       - numpy
@@ -15,6 +17,7 @@ dependencies:
       - pydantic
       - python-dotenv
       - sentence-transformers
+      - tensorboard
       - torch
       - tqdm
       - transformers
